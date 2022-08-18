@@ -1,0 +1,151 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#SettingsContainer{
+    width: 100%;
+    min-height: 100%;
+}
+#settingsHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 15px;
+    font-size: 20px;
+}
+#skipSettingsSection{
+    display: flex;
+}
+#skipSettingsSectionDiv{
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 20px;
+    border: 1px solid;
+    font-size: 15px;
+    padding: 6px 12px;
+    border-radius: 30px;
+    background-color: #000000;
+    color: white;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+}
+#skipIcon{
+    margin: 0 6px;
+}
+#selectModeSection{
+    width: 100%;
+}
+#selectModeTitle{
+    padding: 20px;
+    margin-top: 30px;
+}
+#selectModeInner{
+    width: 100%;
+}
+.selectModeItemsDiv{
+    width: 100%;
+    height: 50px;
+    background-color: #e0ccf5;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+}
+.selectModeItemsImgDiv{
+    width: 30px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 30px;
+}
+.selectModeItemsSelectOuter{
+    border: 2px solid;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.selectModeItemsSelectInner{
+    width: 11px;
+    height: 11px;
+    background-color: black;
+    border-radius: 50%;
+}
+
+#selectNumberOfPlayersTitle{
+    padding: 20px;
+    margin-top: 30px;
+}
+#numberOfPlayersInner{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 0 15px;
+}
+.numberOfPlayersItems{
+    width: 100%;
+    background-color: #e0ccf5;
+    padding: 15px 10px;
+    display: flex;
+    align-items: center;
+    border-radius: 3px;
+}
+.numberOfPlayersImgDiv{
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+.numberOfPlayersSelectOuter{
+    border: 2px solid;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.numberOfPlayersSelectInner{
+    width: 11px;
+    height: 11px;
+    background-color: black;
+    border-radius: 50%;
+}
+#grigSizeTitle{
+    margin-top: 30px;
+    padding: 20px;
+}
+#gridSizeInner{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.gridSizeItems{
+    display: flex;
+    justify-content: center;
+    background-color: #e0ccf5;
+    padding: 15px;
+    margin: 10px;
+    letter-spacing: 8px;
+    border-radius: 3px;
+}
+#startGameSection{
+    margin: 50px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#startGameButton{
+    padding: 10px 30px;
+    border: 3px solid;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 600;
+}

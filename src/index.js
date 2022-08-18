@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import { GeneralProvider } from './context/MainContext'
 
 ReactDOM.render(
-  <App />,
+  <GeneralProvider>
+    <App />
+  </GeneralProvider>
+  ,
   document.getElementById('root')
 );

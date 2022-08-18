@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Barlow:wght@100;300;400;500;600;700;800&family=Merriweather:wght@400;700&family=Noto+Sans:wght@300;500&family=Playfair+Display:wght@400;500;600&family=Poppins:wght@200&family=Roboto:wght@400;500;700&family=Rubik:wght@400;500;600&family=Sora:wght@100;200;300;400;500;600;700;800&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+.mainContainer{
+    height: auto;
+    width: 100vw;
+    min-height: 100vh;
+    background-color: #f0e1ff;
+    overflow: hidden;
+}
+#navigationContainer{
+    width: 100%;
+    min-height: 100%;
+    position: fixed;
+    transition: all 0.3s ease-in-out;
+    padding-top: 15px;
+    background-color: #f0e1ff;
+    z-index: 2;
+}
+#navProfileDetails{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+#navProfileDetailsInner{
+    display: flex;
+    align-items: center;
+}
+#navProfileAvatar{
+    width: 50px;
+    height: 50px;
+    border: 2px solid;
+    border-radius: 50%;
+}
+#navProfileName{
+    font-size: 23px;
+    margin: 0 15px;
+    font-weight: 600;
+}
+.basicIcons{
+    width: 20px;
+}
+.bigIcons{
+    width: 25px;
+}
+.links{
+    color: black;
+    text-decoration: none;
+}
+#closeIcon{
+    margin-left: auto;
+    margin-right: 20px;
+}
+#closeIcon2{
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+#navItemsContainer{
+    width: 100%;
+    height: auto;
+    padding-top: 40px;
+}
+.navItems{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 22px 30px;
+    font-size: 19px;
+}
+.navThumbnailDiv{
+    width: 50px;
+    display: flex;
+    align-items: center;
+}

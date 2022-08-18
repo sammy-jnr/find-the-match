@@ -1,0 +1,38 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+#playGameContainer{
+    width: 100vw;
+    height: 100vh;
+}
+#playGameHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+}
+#playGameHeaderInner{
+    display: flex;
+    align-items: center;
+}
+#playGameTimer{
+    margin-left: 50px;
+}
+
+#gridContainer4by4{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+.gridContainer4by4Items{
+    width: 100%;
+    height: 100px;
+    background-color: red;
+    font-size: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
