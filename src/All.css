@@ -17,9 +17,11 @@
     min-height: 100%;
     position: fixed;
     transition: all 0.3s ease-in-out;
-    padding-top: 15px;
+    padding-top: 0px;
     background-color: #f0e1ff;
     z-index: 2;
+    display: flex;
+    flex-direction: column;
 }
 #navProfileDetails{
     width: 100%;
@@ -59,8 +61,8 @@
 }
 #closeIcon2{
     position: absolute;
-    top: 15px;
-    right: 20px;
+    top: 35px;
+    right: 35px;
 }
 #navItemsContainer{
     width: 100%;
@@ -78,4 +80,12 @@
     width: 50px;
     display: flex;
     align-items: center;
+}
+#logoutBtn{
+    margin-top: auto;
+    padding: 20px;
+    background-color: rgb(37, 37, 37);
+    color: #f0e1ff;
+    text-align: center;
+    font-size: 17px;
 }

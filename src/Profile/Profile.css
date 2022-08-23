@@ -1,0 +1,125 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#profileContainer{
+    width: 100vw;
+    min-height: 100vh;
+}
+#HeaderSecction{
+    display: flex;
+    align-items: center;
+    padding: 0px 20px;
+    height: 100px;
+    margin-bottom: 40px;
+}
+#arrowBack{
+    margin-right: 15px ;
+}
+#HeaderSecctionInner{
+    display: flex;
+    align-items: center;
+}
+#profileAvatar{
+    width: 60px;
+    height: 60px;
+    background-color: green;
+    border-radius: 50%;
+}
+#profileName{
+    margin-left: 20px;
+    font-size: 22px;
+    font-weight: 700;
+}
+#profileId{
+    font-size: 12px;
+    color: #555555;
+}
+#profileInfoContainer{
+    margin: 20px 5px;
+}
+.profileInfoDetails{
+    margin: 10px 0;
+    display: flex;
+    font-weight: 600;
+}
+.profileInfoDetailsInner{
+    font-weight: 700;
+    margin-left: 20px;
+}
+#profileSelectMode{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border: 1px solid black; 
+    font-size: 19px;
+    margin: 0 5px;
+    border-radius: 6px 6px 0 0;
+    font-weight: 600;
+    letter-spacing: 10px;
+}
+#profileSelection4by4{
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    padding: 10px 0;
+    color: white;
+}
+#profileSelection6by6{
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+#connectors{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0 5px;
+    height: 7px;
+}
+#connector1{
+    border: 2px solid black; 
+    border-top: none;
+    border-bottom: none;
+}
+#connector2{
+    border: 2px solid black; 
+    border: none;
+    border-bottom: 2px solid;
+}
+#displaySelected{
+    margin: 0 5px;
+    margin-bottom: 30px;
+    min-height: 300px;
+    border: 2px solid;
+    border-top: none;
+    padding: 20px 0;
+}
+.last5Games{
+    /* padding: 20px 10px; */
+    background-color: white;
+    margin: 10px 0;
+    margin-top: 0;
+}
+.last5GamesText{
+    padding:15px  10px;
+    padding-bottom: 30px;
+}
+.last5GamesItems{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 10px;
+    border: 1px solid;
+    margin: 1px 10px;
+}
+.last5GamesShowMore{
+    height: 40px;
+}
+.selectedSectionInfo{
+    margin: 40px 0;
+}
+.selectedSectionInfoItems{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 15px;
+    font-weight: 600;
+}

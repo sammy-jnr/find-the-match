@@ -1,12 +1,19 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import "./HomePage.css"
 import menuIcon from "../Assets/icons/menuIcon.svg"
 import {GeneralContext} from "../context/MainContext"
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 
 function HomePage() {
   const{ setmenuOpen } = useContext(GeneralContext)
+
+  const location = useLocation();
+
+  useEffect(() => {
+    setmenuOpen(false)
+  }, [location]);
+
   return (
     <div id='homepageContainer'>
       <section id='homeHeader'>

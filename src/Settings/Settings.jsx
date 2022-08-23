@@ -1,12 +1,18 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import "./Settings.css"
 import menuIcon from "../Assets/icons/menuIcon.svg"
 import skipIcon from "../Assets/icons/skipIcon.svg"
 import {GeneralContext} from "../context/MainContext"
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 function Settings() {
     const{ setmenuOpen, setCurrectGameInfo } = useContext(GeneralContext)
+
+    const location = useLocation();
+
+    useEffect(() => {
+      setmenuOpen(false)
+    }, [location]);
 
     let [modeNumbers, setModeNumbers] = useState(true)
     let [modeLetters, setModeLetters] = useState(false)
