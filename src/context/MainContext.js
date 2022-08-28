@@ -12,15 +12,38 @@ export function GeneralProvider({children}){
     let [currectGameInfo, setCurrectGameInfo] = useState(
         {
             mode: "numbers",
-            numberOfPlayers: "1",
+            numberOfPlayers: 1,
             gridSize: "4by4"
         }
     )
 
+    let [playersScores, setplayersScores] = useState([
+        {
+            id: 1,
+            score: 0,
+        },
+        {
+            id: 2,
+            score: 0,
+        },
+        {
+            id: 3,
+            score: 0,
+        },
+        {
+            id: 4,
+            score: 0,
+        },
+    ])
+
+    let [singlePlayerScore, setsinglePlayerScore] = useState(0)
+
+    let [numberOfAttempts, setnumberOfAttempts] = useState(0)
+    let [timeSpent, settimeSpent] = useState(0)
 
 
     return(
-        <GeneralContext.Provider value={{setmenuOpen,menuOpen,setCurrectGameInfo,currectGameInfo,finalArray,setfinalArray}}>
+        <GeneralContext.Provider value={{setmenuOpen,menuOpen,setCurrectGameInfo,currectGameInfo,finalArray,setfinalArray,playersScores,setplayersScores,numberOfAttempts,setnumberOfAttempts,timeSpent,settimeSpent,singlePlayerScore,setsinglePlayerScore}}>
             {children}
         </GeneralContext.Provider>
     )

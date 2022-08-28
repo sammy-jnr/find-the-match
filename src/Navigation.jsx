@@ -19,7 +19,7 @@ function Navigation() {
 
     const{ menuOpen, setmenuOpen } = useContext(GeneralContext)
 
-    const{ logOut,isLoggedIn } = useContext(AuthContext);
+    const{ logOut,isLoggedIn, username } = useContext(AuthContext);
 
   return (
     <div id='navigationContainer' style={{right: menuOpen ? "0" : "-100%"}}>
@@ -27,7 +27,7 @@ function Navigation() {
             <div id='navProfileDetails'>
                 <div id='navProfileDetailsInner'>
                     <div id='navProfileAvatar'></div>
-                    <p id='navProfileName'>Sammyjnr</p>
+                    <p id='navProfileName'>{username}</p>
                 </div>
                 <img src={closeIcon} alt="" className="basicIcons" id='closeIcon' onClick={()=>setmenuOpen(false)}/>
             </div>

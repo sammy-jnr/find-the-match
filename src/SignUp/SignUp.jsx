@@ -12,7 +12,7 @@ function SignUp() {
             
     const user = auth.currentUser
 
-    const{ CreateNewUser, updatingUserProfile } = useContext(AuthContext);
+    const{ CreateNewUser, updatingUserProfile, addUserToDatabase,setDisplayName } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const location = useLocation();
@@ -30,19 +30,14 @@ function SignUp() {
         e.preventDefault();
         if(password !== confirmPassword){console.log("passwords do not match");return;}
         try {
-            await CreateNewUser(email, password)
-            
-            console.log("name updated successfully")
-            navigate("/profilepage")
+            await CreateNewUser(email, password).then(()=>{
+                navigate("/profilepage")
+            })
+                       
         } catch (error) {
             console.log(error)
         }
-        try {
-            console.log(user.uid)
-            await updatingUserProfile(name)
-        } catch (error) {
-            console.log(error.message)
-        }
+       
 
     } 
    
@@ -53,7 +48,7 @@ function SignUp() {
         <form action="submit" id='signupForm' onSubmit={(e) => submitInfo(e)}>
             <label htmlFor="nameInput" className='formItems'>
                 <div className="signupMiniText">Name</div>
-                <input type="name" name='nameInput' id='nameInput' onChange={(e)=>setName(e.target.value)} />
+                <input type="name" name='nameInput' id='nameInput' onChange={(e)=>setDisplayName(e.target.value)} />
             </label>
             <label htmlFor="emailInput" className='formItems'>
                 <div className="signupMiniText">Email</div>

@@ -5,17 +5,22 @@ import { useState, useContext } from 'react'
 import { useEffect } from 'react'
 import {numbersArray , lettersArray, numbersArrayL , lettersArrayL} from "./Random"
 import { GeneralContext } from "../context/MainContext"
-import { useLocation } from "react-router-dom"
+import { AuthContext } from "../context/AuthenticationContext"
+import { useNavigate, useLocation } from "react-router-dom"
 
 function Play() {
 
-    const { currectGameInfo, setmenuOpen } = useContext(GeneralContext)
+    const { currectGameInfo, setmenuOpen, playersScores, setplayersScores, setnumberOfAttempts, settimeSpent, setsinglePlayerScore } = useContext(GeneralContext)
+
+    const{ gameEnded, setmodeIs4by4, setgameWon } = useContext(AuthContext)
+
 
     const location = useLocation();
     useEffect(() => {
       setmenuOpen(false)
     }, [location]);
 
+    let navigate = useNavigate();
 
     let By4 = true;
     let By6 = false;
@@ -47,13 +52,24 @@ function Play() {
     if(currectGameInfo.gridSize === "4by4"){
         By4 = true;
         By6 = false;
+        setmodeIs4by4(true);
     }
     if(currectGameInfo.gridSize === "6by6"){
         By4 = false;
         By6 = true;
+        setmodeIs4by4(false);
     }
 
+    useEffect(()=>{
+        playersScores[0].score = 0
+        playersScores[1].score = 0
+        playersScores[2].score = 0
+        playersScores[3].score = 0
+    },[])
+
+
     let playerNumber = currectGameInfo.numberOfPlayers
+    
 
     let [count, setcount] = useState(0)
     let [currentPlayer, setcurrentPlayer] = useState(1)
@@ -75,25 +91,7 @@ function Play() {
     }
 
   
-    let [playersScores, setplayersScores] = useState([
-        {
-            id: 1,
-            score: 0,
-        },
-        {
-            id: 2,
-            score: 0,
-        },
-        {
-            id: 3,
-            score: 0,
-        },
-        {
-            id: 4,
-            score: 0,
-        },
-    ]
-    )
+    
     function changeScore(id){
         setplayersScores((prev) => {
             return prev.map(player => {
@@ -105,8 +103,8 @@ function Play() {
 
             })
         })
+        
     } 
-
     let [FirstChoosenItem, setFirstChoosenItem] = useState("")
     let [SecondChoosenItem, setSecondChoosenItem] = useState("")
     let [AreadyOpenedArray, setAreadyOpenedArray] = useState([])
@@ -309,6 +307,7 @@ function Play() {
         let [loading, setLoading] = useState(false); 
         const PlayGame = (e) =>{
             if(loading === true)return;
+            if(TotalTime < 1)return;
             if(AreadyOpenedArray.includes(e.target.id))return;
             if(e.target.id === FirstChoosenItem)return;
             let selectedBox = e.target.id
@@ -396,6 +395,76 @@ function Play() {
             }
         }
        
+
+
+    let [TotalTime, setTotalTime] = useState(
+        ()=>{
+            if (By4){return 50}
+            else{return 700}
+
+        }
+    ) 
+    let [timeLeft, settimeLeft] = useState()
+    let [secondTimeLeft, setsecondTimeLeft] = useState()
+    let [numberOfMoves, setnumberOfMoves] = useState(0)
+
+    let [Attempts, setAttempts] = useState(0)
+    let [whichPlayerWon, setwhichPlayerWon] = useState(0)
+
+    let isgameEnded = false
+
+    let gameEndedForTimerUseEffect = false;
+
+
+    function calculateScore() {
+        if(By4 && AreadyOpenedArray.length < 8){
+            setgameWon(false);
+        }else if(By4 && AreadyOpenedArray.length >= 8){
+            setgameWon(true);
+        }else if(!By4 && AreadyOpenedArray.length < 16){
+            setgameWon(false);
+        }else{
+            setgameWon(true);
+        }
+        let a = AreadyOpenedArray.length * 4
+        let b = numberOfMoves*4
+        let c = 200 - b
+        let d = Attempts*2
+        return  a +  secondTimeLeft + c-d
+    }
+
+    function endGame(){
+        settimeSpent(secondTimeLeft);
+        if(AreadyOpenedArray.length > 13 && By4){
+            console.log("gameEnded")
+            let score = calculateScore()
+            gameEnded(secondTimeLeft, score)
+            gameEndedForTimerUseEffect = true;
+            setTimeout(() => {
+                (navigate("/result"))
+            }, 1500);
+        }
+        if(AreadyOpenedArray.length > 34 && By6){
+            console.log("gameEnded")
+            let score = calculateScore()
+            gameEnded(secondTimeLeft, score)
+            gameEndedForTimerUseEffect = true;
+            setTimeout(() => {
+                (navigate("/result"))
+            }, 1500);
+        }
+        if(TotalTime <= 0 && !isgameEnded){
+            gameEndedForTimerUseEffect = true;
+            setTimeout(() => {
+                (navigate("/result"))
+            }, 1500);
+            let score = calculateScore()
+            gameEnded(secondTimeLeft, score)
+            isgameEnded = true;
+        }
+        setsinglePlayerScore(calculateScore());
+    }
+
     useEffect(()=>{
         let myTimeout
         if(SecondChoosenItem === "" )return;
@@ -408,9 +477,7 @@ function Play() {
             setLoading(false);
             checkPlayer()
             changeScore(currentPlayer)
-            if(AreadyOpenedArray.length > 15){
-                alert(`player ${currentPlayer} has won`)
-            }
+            endGame();
         }else{
             myTimeout = setTimeout(function(){
                 closeIsOpen(FirstChoosenItem);
@@ -421,26 +488,37 @@ function Play() {
                 checkPlayer()
             },1000);
         }
+        setAttempts(prev => prev + 1)
+        setnumberOfAttempts(Attempts)
+        setnumberOfMoves((prev) => prev + 1)
         
         return() =>{
             clearTimeout(myTimeout);
         }
     },[SecondChoosenItem])
-
-
-   
     
-
-    let [TotalTime, setTotalTime] = useState(120) 
-    let [timeLeft, settimeLeft] = useState()
     useEffect(()=>{
         let myinterval = setInterval(function(){
-            if(TotalTime < 0 ){clearInterval(myinterval);return}
+            if(TotalTime < 0 ){
+                clearInterval(myinterval);
+                endGame();
+                return
+            }
+            if(gameEndedForTimerUseEffect){
+                clearInterval(myinterval);
+            }
             if(gameOver){clearInterval(myinterval);return}
             setTotalTime(prev => prev-1)
             let seconds = Math.floor( (TotalTime) % 60 );
             let minutes = Math.floor( (TotalTime/60) % 60 )  
             let displayTime
+            setsecondTimeLeft(()=>{
+                if(By4){
+                    return 51 - TotalTime;
+                }else{
+                    return 701 - TotalTime;
+                } 
+            })
             if(seconds < 10){
                 displayTime = `${minutes}:0${seconds}`
             }else{
@@ -453,7 +531,6 @@ function Play() {
         return() => {clearInterval(myinterval)}
     },[TotalTime])
         
-
   return (
     <div id='playGameContainer'>
         <section id='playGameHeader' >
@@ -518,7 +595,7 @@ function Play() {
             {By6 && <div style={{ backgroundColor:  isOpenBox36 && !isAcceptedBox36 ? "grey": isAcceptedBox36 ? "green": "red"  }}  onClick={(e)=>{PlayGame(e)}} className='gridContainerItems' id='4By4Box36' >{isOpenBox36? mainArray[35] : ""}</div>}
         </div>
         <section id='endGameBtnDiv'>
-        <button id='endGameBtn'>Forfeit </button>
+        <button id='endGameBtn' >Forfeit </button>
         </section>
     </div>
   )
