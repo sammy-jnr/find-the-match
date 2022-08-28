@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react'
 
 
 function Result() {
-  const { setmenuOpen, playersScores, currectGameInfo, numberOfAttempts, timeSpent, singlePlayerScore } = useContext(GeneralContext)
+  const { setmenuOpen, playersScores, currectGameInfo, numberOfAttempts, timeSpent } = useContext(GeneralContext)
 
   let playersMode;
   if(currectGameInfo.numberOfPlayers <= 1){
@@ -46,7 +46,7 @@ console.log(playersScores)
         {playersMode === "singleplayer" &&<section id='scoreArea' >
             <div id='noOfAttemptsText'>Attempts: {numberOfAttempts}</div>
             <div id='timeText'>Time spent: {displayTime}</div>
-            <div id='scoreText'>Score: {singlePlayerScore}</div>
+            <div id='scoreText'>Score: {player1Score *10}</div>
         </section>}
         {playersMode !== "singleplayer" && 
           <section id='scoreArea2'>

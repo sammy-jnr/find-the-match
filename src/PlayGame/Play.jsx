@@ -10,7 +10,7 @@ import { useNavigate, useLocation } from "react-router-dom"
 
 function Play() {
 
-    const { currectGameInfo, setmenuOpen, playersScores, setplayersScores, setnumberOfAttempts, settimeSpent, setsinglePlayerScore } = useContext(GeneralContext)
+    const { currectGameInfo, setmenuOpen, playersScores, setplayersScores, setnumberOfAttempts, settimeSpent } = useContext(GeneralContext)
 
     const{ gameEnded, setmodeIs4by4, setgameWon } = useContext(AuthContext)
 
@@ -408,7 +408,6 @@ function Play() {
     let [secondTimeLeft, setsecondTimeLeft] = useState()
     let [numberOfMoves, setnumberOfMoves] = useState(0)
 
-    let [Attempts, setAttempts] = useState(0)
     let [whichPlayerWon, setwhichPlayerWon] = useState(0)
 
     let isgameEnded = false
@@ -427,10 +426,9 @@ function Play() {
             setgameWon(true);
         }
         let a = AreadyOpenedArray.length * 4
-        let b = numberOfMoves*4
+        let b = numberOfMoves*1.5
         let c = 200 - b
-        let d = Attempts*2
-        return  a +  secondTimeLeft + c-d
+        return  a +  secondTimeLeft + c
     }
 
     function endGame(){
@@ -462,7 +460,6 @@ function Play() {
             gameEnded(secondTimeLeft, score)
             isgameEnded = true;
         }
-        setsinglePlayerScore(calculateScore());
     }
 
     useEffect(()=>{
@@ -488,8 +485,7 @@ function Play() {
                 checkPlayer()
             },1000);
         }
-        setAttempts(prev => prev + 1)
-        setnumberOfAttempts(Attempts)
+        setnumberOfAttempts(prev => prev + 1)
         setnumberOfMoves((prev) => prev + 1)
         
         return() =>{

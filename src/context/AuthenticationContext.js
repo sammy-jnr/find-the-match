@@ -109,7 +109,7 @@ export function AuthProvider({children}) {
                     AverageTime: 0,
                     HighestScore:0,
                     FastestTime: 0,
-                    ToTalGames: 0
+                    TotalGames: 0
                 })
                 setDoc(doc(db, `users/${userUid}/scores`, "6by6"), {
                     scoreInfo: arrayUnion(),
@@ -117,7 +117,7 @@ export function AuthProvider({children}) {
                     AverageTime: 0,
                     HighestScore:0,
                     FastestTime: 0,
-                    ToTalGames: 0
+                    TotalGames: 0
                 })
                 console.log("done")
             } catch (error) {
@@ -246,9 +246,14 @@ export function AuthProvider({children}) {
 
                         newtempTotalGames4By4 = tempTotalGames4By4 + 1;
                         
-                        if(timeSpent < tempfastestTime){
+                        if(tempfastestTime === 0  ){
                             newtempfastestTime = timeSpent
-                        }else{ newtempfastestTime = tempfastestTime}
+                        }else if(tempfastestTime >= timeSpent){
+                            newtempfastestTime = timeSpent
+                        }else{
+                            newtempfastestTime = tempfastestTime
+                        }
+                        
 
                     })
                 }).catch((err) => console.log(err.message))
@@ -322,9 +327,13 @@ export function AuthProvider({children}) {
 
                         newtempTotalGames6By6 = tempTotalGames6By6 + 1;
                         
-                        if(timeSpent < tempfastestTime){
+                        if(tempfastestTime === 0  ){
                             newtempfastestTime = timeSpent
-                        }else{ newtempfastestTime = tempfastestTime}
+                        }else if(tempfastestTime >= timeSpent){
+                            newtempfastestTime = timeSpent
+                        }else{
+                            newtempfastestTime = tempfastestTime
+                        }
 
                     })
                 }).catch((err) => console.log(err.message))
@@ -372,7 +381,7 @@ export function AuthProvider({children}) {
                  setAverageScore4by4(Math.floor(userBasicInfoResult.AverageScore))
                  setHighestScore4by4(userBasicInfoResult.HighestScore)
                  setScoresArray4by4(userBasicInfoResult.scoreInfo)
-                 setTotalGamesPlayed4by4(userBasicInfoResult.ToTalGames)
+                 setTotalGamesPlayed4by4(userBasicInfoResult.TotalGames)
                  setFastestTime4by4(()=>{
                     let seconds = Math.floor( (userBasicInfoResult.FastestTime) % 60 );
                     let minutes = Math.floor( (userBasicInfoResult.FastestTime/60) % 60 )  
@@ -456,7 +465,7 @@ export function AuthProvider({children}) {
                     setAverageScore4by4(Math.floor(userBasicInfoResult.AverageScore))
                     setHighestScore4by4(userBasicInfoResult.HighestScore)
                     setScoresArray4by4(userBasicInfoResult.scoreInfo)
-                    setTotalGamesPlayed4by4(userBasicInfoResult.ToTalGames)
+                    setTotalGamesPlayed4by4(userBasicInfoResult.TotalGames)
                     setFastestTime4by4(()=>{
                         let seconds = Math.floor( (userBasicInfoResult.FastestTime) % 60 );
                         let minutes = Math.floor( (userBasicInfoResult.FastestTime/60) % 60 )  
