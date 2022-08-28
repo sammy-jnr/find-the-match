@@ -13,7 +13,7 @@ function ProfilePage() {
 
 
     const{ setmenuOpen } = useContext(GeneralContext)
-    const{ username, getDataFromDatabase,AverageTime4by4, AverageScore4by4, HighestScore4by4, ScoresArray4by4, AverageTime6by6, AverageScore6by6, HighestScore6by6, ScoresArray6by6, TotalGamesPlayed, TotalGamesWon, TotalGamesLost } = useContext(AuthContext)
+    const{ username, getDataFromDatabase,AverageTime4by4, AverageScore4by4, HighestScore4by4, ScoresArray4by4, AverageTime6by6, AverageScore6by6, HighestScore6by6, ScoresArray6by6, TotalGamesPlayed, TotalGamesWon, TotalGamesLost,FastestTime4by4,TotalGamesPlayed4by4 } = useContext(AuthContext)
     
     const location = useLocation();
     useEffect(() => {
@@ -56,10 +56,11 @@ function ProfilePage() {
                     <section className='last5GamesShowMore'></section>
                 </section>
                 <section className='selectedSectionInfo'>
-                    <div className='selectedSectionInfoItems'><div>Total Games</div> <div>{TotalGamesPlayed} games</div></div>
+                    <div className='selectedSectionInfoItems'><div>Total Games</div> <div>{TotalGamesPlayed4by4} games</div></div>
                     <div className='selectedSectionInfoItems'><div>Average time</div> <div>{AverageTime4by4}</div></div>
                     <div className='selectedSectionInfoItems'><div>Average Score</div> <div>{AverageScore4by4}</div></div>
                     <div className='selectedSectionInfoItems'><div>Highest Score</div> <div>{HighestScore4by4}</div></div>
+                    <div className='selectedSectionInfoItems'><div>Fastest Time</div> <div>{FastestTime4by4}</div></div>
                 </section>
             </div>
         )
