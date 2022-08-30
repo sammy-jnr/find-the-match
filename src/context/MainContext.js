@@ -21,18 +21,22 @@ export function GeneralProvider({children}){
         {
             id: 1,
             score: 0,
+            name: "player1",
         },
         {
             id: 2,
             score: 0,
+            name: "player2",
         },
         {
             id: 3,
             score: 0,
+            name: "player3",
         },
         {
             id: 4,
             score: 0,
+            name: "player4",
         },
     ])
 

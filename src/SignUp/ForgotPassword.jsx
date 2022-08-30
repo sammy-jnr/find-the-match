@@ -17,7 +17,7 @@ function ForgotPassword() {
         <section id='signupMenu'><img src={menuIcon} alt="" id='signupMenuIcon' onClick={()=>setmenuOpen(true)} /></section>
         <div id='signinText' >Reset Password</div>
         <label htmlFor="emailInput" id='forgotPasswordDiv'>
-            <div className="signinMiniText">email</div>
+            <div id="forgotPasswordMiniText">Email</div>
             <input type="email" name='emailInput' id='emailInputForgotPassword'/>
         </label>
         <div id='submitDivForgotPassword'><button id='ForgotPasswordSubmitButton'>Submit</button></div>

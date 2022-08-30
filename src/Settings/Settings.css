@@ -34,24 +34,21 @@
 #skipIcon{
     margin: 0 6px;
 }
-#selectModeSection{
-    width: 100%;
-}
 #selectModeTitle{
     padding: 20px;
     margin-top: 30px;
 }
-#selectModeInner{
-    width: 100%;
-}
 .selectModeItemsDiv{
-    width: 100%;
     height: 50px;
-    background-color: #e0ccf5;
+    background-color: #fffdf0;
     padding: 0 10px;
     display: flex;
     align-items: center;
     margin-bottom: 2px;
+    color: #032327;
+    margin: 5px 10px;
+    border-radius: 4px;
+    font-weight: 600;
 }
 .selectModeItemsImgDiv{
     width: 30px;
@@ -87,10 +84,12 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
     padding: 0 15px;
+    font-weight: 600;
 }
 .numberOfPlayersItems{
     width: 100%;
-    background-color: #e0ccf5;
+    background-color: #fffdf0;
+    color: #032327;
     padding: 15px 10px;
     display: flex;
     align-items: center;
@@ -130,20 +129,21 @@
 .gridSizeItems{
     display: flex;
     justify-content: center;
-    background-color: #e0ccf5;
+    background-color: #fffce7;
     padding: 15px;
     margin: 10px;
     letter-spacing: 8px;
     border-radius: 3px;
+    font-weight: 600;
 }
 #startGameSection{
-    margin: 50px 0;
+    margin: 80px 0;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 #startGameButton{
-    padding: 10px 30px;
+    padding: 15px 50px;
     border: 3px solid;
     border-radius: 10px;
     font-size: 17px;

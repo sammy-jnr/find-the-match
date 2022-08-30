@@ -8,8 +8,7 @@ import { createUserWithEmailAndPassword,
         from "firebase/auth"
 import { auth } from "../Firebase/FirebaseHosting";
 import { db } from "../Firebase/FirebaseHosting";
-import { setDoc, doc, updateDoc, arrayUnion, getDoc, increment, onSnapshot } from "firebase/firestore"
-import { async } from "@firebase/util";
+import { setDoc, doc, updateDoc, arrayUnion, getDoc, increment } from "firebase/firestore"
 
 export const AuthContext = createContext()
 
@@ -19,7 +18,6 @@ export function AuthProvider({children}) {
 
     
     let [displayName, setDisplayName] = useState()
-    let [userEmail, setUserEmail] = useState()
 
     let [isLoggedIn, setIsLoggedIn] = useState()
 
@@ -62,11 +60,13 @@ export function AuthProvider({children}) {
     }
 
 
+
     async function signInExistingUser(email, password) {
         return await signInWithEmailAndPassword(auth, email, password)
-        .then(()=>setIsLoggedIn(true))
-        .then(()=>setusername(auth.currentUser.displayName))
-        
+        .then(()=>{
+            setIsLoggedIn(true)
+            setusername(auth.currentUser.displayName)
+        })  
     }
 
     
@@ -133,12 +133,14 @@ export function AuthProvider({children}) {
     let [HighestScore4by4, setHighestScore4by4] = useState(0)
     let [ScoresArray4by4, setScoresArray4by4] = useState(0)
     let [FastestTime4by4, setFastestTime4by4] = useState(0)
+    let [GamesArray4by4, setGamesArray4by4] = useState([])
 
     let [TotalGamesPlayed6by6, setTotalGamesPlayed6by6] = useState(0)
     let [AverageTime6by6, setAverageTime6by6] = useState(0)
     let [AverageScore6by6, setAverageScore6by6] = useState(0)
     let [HighestScore6by6, setHighestScore6by6] = useState(0)
     let [ScoresArray6by6, setScoresArray6by6] = useState(0)
+    let [GamesArray6by6, setGamesArray6by6] = useState([])
     let [FastestTime6by6, setFastestTime6by6] = useState(0)
 
 
@@ -394,6 +396,7 @@ export function AuthProvider({children}) {
                     return displayTime     
 
                 })
+                setGamesArray4by4(userBasicInfoResult.scoreInfo)
              })
              getDoc(doc(db, `users/${userUid}/scores`, "6by6"))
              .then((response) => {
@@ -427,6 +430,8 @@ export function AuthProvider({children}) {
 
                 })
                  setTotalGamesPlayed6by6(userBasicInfoResult.TotalGames);
+                 setGamesArray6by6(userBasicInfoResult.scoreInfo)
+
              })
              getDoc(doc(db, "users", `${userUid}`))
              .then((response) => {
@@ -478,6 +483,7 @@ export function AuthProvider({children}) {
                         return displayTime     
 
                     })
+                    setGamesArray4by4(userBasicInfoResult.scoreInfo)
                 })
                 getDoc(doc(db, `users/${userUid}/scores`, "6by6"))
                 .then((response) => {
@@ -511,6 +517,7 @@ export function AuthProvider({children}) {
 
                     })
                     setTotalGamesPlayed6by6(userBasicInfoResult.TotalGames);
+                    setGamesArray6by6(userBasicInfoResult.scoreInfo)
                 })
                 getDoc(doc(db, "users", `${userUid}`))
                 .then((response) => {
@@ -528,7 +535,7 @@ export function AuthProvider({children}) {
   
     return(
         <AuthContext.Provider value={{CreateNewUser, signInExistingUser, onAuthStateChanged,
-                                        setDisplayName,setUserEmail,updatingUserProfile,username,
+                                        setDisplayName,updatingUserProfile,username,
                                         logOut,isLoggedIn,setIsLoggedIn,gameEnded,
 
                                         setmodeIs4by4,setgameWon,
@@ -536,7 +543,7 @@ export function AuthProvider({children}) {
 
                                         AverageTime4by4, AverageScore4by4, HighestScore4by4, ScoresArray4by4, AverageTime6by6, AverageScore6by6, HighestScore6by6, ScoresArray6by6,
                                         TotalGamesPlayed, TotalGamesLost, TotalGamesWon,
-                                        FastestTime4by4, FastestTime6by6, TotalGamesPlayed4by4, TotalGamesPlayed6by6
+                                        FastestTime4by4, FastestTime6by6, TotalGamesPlayed4by4, TotalGamesPlayed6by6,GamesArray4by4,GamesArray6by6
                                         
                                         }}>
             {children}
