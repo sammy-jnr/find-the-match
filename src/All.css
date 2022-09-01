@@ -9,8 +9,8 @@
     height: auto;
     width: 100vw;
     min-height: 100vh;
-    background-color: #042c31;
-    color: #fffce7;
+    background-color: #042c2e;
+    color: #fffdf0;
     overflow: hidden;
 }
 #navigationContainer{
@@ -31,6 +31,7 @@
     align-items: center;
     padding: 0 10px;
     color: black;
+    margin-top: 30px;
 }
 #navProfileDetailsInner{
     display: flex;
@@ -40,6 +41,13 @@
     width: 50px;
     height: 50px;
     border: 2px solid;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#profileAvatar2{
+    width: 50px;
     border-radius: 50%;
 }
 #navProfileName{

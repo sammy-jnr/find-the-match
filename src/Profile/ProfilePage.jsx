@@ -1,19 +1,25 @@
 import React, { useState, useEffect, useContext } from "react";
-import menuIcon from "../Assets/icons/menuIcon.svg";
+import menuIcon from "../Assets/icons/menuIconBlack.svg";
+import closeIcon from "../Assets/icons/closeIcon.svg";
 import downArrow from "../Assets/icons/downArrow.svg";
 import upArrow from "../Assets/icons/upArrow.svg";
+import pencilIcon from "../Assets/icons/pencilIcon.svg";
 import "./Profile.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { GeneralContext } from "../context/MainContext";
 import { AuthContext } from "../context/AuthenticationContext";
 
 function ProfilePage() {
+
+
+
+  
+
   const navigate = useNavigate();
 
   const { setmenuOpen } = useContext(GeneralContext);
   const {
     username,
-    getDataFromDatabase,
     AverageTime4by4,
     AverageScore4by4,
     HighestScore4by4,
@@ -31,6 +37,8 @@ function ProfilePage() {
     GamesArray6by6,
     FastestTime6by6,
     TotalGamesPlayed6by6,
+    updatingUserProfile,
+    receiveUserAvatar
   } = useContext(AuthContext);
 
   const location = useLocation();
@@ -38,14 +46,34 @@ function ProfilePage() {
     setmenuOpen(false);
   }, [location]);
 
+  let [selectedAvatar, setselectedAvatar] = useState()
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+          const response = await import(`../Assets/Avatars/${receiveUserAvatar}.jpg`) 
+          setselectedAvatar(response.default)
+      } catch (err) {
+          console.log(err)
+      }
+  }
+
+  fetchImage()
+  },[receiveUserAvatar])
+
+  
+
   let [fourByFour, setfourByFour] = useState(true);
 
   let [usingFirstFive4By4, setusingFirstFive4By4] = useState(true);
   let [usingFirstFive6By6, setusingFirstFive6By6] = useState(true);
 
+
+  
+  
   let firstFiveArray4By4 = [];
   GamesArray4by4.forEach((item) => {
-    if (firstFiveArray4By4.length < 6) {
+    if (firstFiveArray4By4.length < 5) {
       firstFiveArray4By4.push(item);
     }
   });
@@ -66,12 +94,7 @@ function ProfilePage() {
       setusedArray4By4(firstFiveArray4By4);
     }
   }
-  console.log(firstFiveArray4By4);
-
-  useEffect(() => {
-    setusedArray4By4(firstFiveArray4By4);
-  }, [GamesArray4by4]);
-
+  
   function setfinal6By6() {
     if (usingFirstFive6By6) {
       setusedArray6By6(GamesArray6by6);
@@ -79,11 +102,11 @@ function ProfilePage() {
       setusedArray6By6(firstFiveArray6By6);
     }
   }
-  console.log(firstFiveArray6By6);
-
   useEffect(() => {
+    setusedArray4By4(firstFiveArray4By4);
     setusedArray6By6(firstFiveArray6By6);
-  }, [GamesArray6by6]);
+  }, [GamesArray4by4, GamesArray6by6]);
+
 
   function convertTimeFormat(time) {
     let seconds = Math.floor(time % 60);
@@ -102,7 +125,6 @@ function ProfilePage() {
       newString += date[i];
     }
     let a = newString.substring(13);
-    console.log(a);
     let b = "";
     for (let i = a.length - 1; i >= 0; i--) {
       b += a[i];
@@ -137,11 +159,10 @@ function ProfilePage() {
             <div className="gameHistoryCategories">Time Spent</div>
           </div>
           {usedArray4By4.map((item, index) => {
-            console.log(item.date);
             return (
               <div className="last5GamesItems" key={index}>
                 <div className="last5GamesItemsInner">
-                  {changeToAppropriateDate(item.date)}
+                  {item.date}
                 </div>
                 <div className="last5GamesItemsInner">{item.score}</div>
                 <div className="last5GamesItemsInner">
@@ -204,7 +225,7 @@ function ProfilePage() {
             return (
               <div className="last5GamesItems" key={index}>
                 <div className="last5GamesItemsInner">
-                  {changeToAppropriateDate(item.date)}
+                  {item.date}
                 </div>
                 <div className="last5GamesItemsInner">{item.score}</div>
                 <div className="last5GamesItemsInner">
@@ -237,8 +258,12 @@ function ProfilePage() {
     );
   }
 
+  let [editName, seteditName] = useState(false)
+  let [holdTempName, setholdTempName] = useState();
+
+
   const SelectedA = {
-    backgroundColor: "black",
+    backgroundColor: "#041e29",
     color: "white",
     borderRadius: "5px 5px 0 0",
   };
@@ -251,10 +276,15 @@ function ProfilePage() {
     <div id="profileContainer">
       <section id="HeaderSecction">
         <div id="HeaderSecctionInner">
-          <div id="profileAvatar"></div>
+          <div id="profileAvatar" 
+            onClick={()=>{
+              navigate("avatars");
+            }}
+          > <img src={selectedAvatar} alt="" id="avatarImage"/> </div>
           <div id="profileName">
-            {username} <div id="profileId">#2030</div>
+            {username} 
           </div>
+          <img src={pencilIcon} alt=""  id="pencilIcon" onClick={()=>{seteditName(true)}}/>
         </div>
         <img
           src={menuIcon}
@@ -266,7 +296,7 @@ function ProfilePage() {
       <section id="profileInfoContainer">
         <div className="profileInfoDetails">
           Games played:{" "}
-          <div className="profileInfoDetailsInner">{TotalGamesPlayed}</div>{" "}
+          <div className="profileInfoDetailsInner">{TotalGamesPlayed}</div>
         </div>
         <div className="profileInfoDetails">
           Games won:{" "}
@@ -303,6 +333,25 @@ function ProfilePage() {
           {fourByFour ? <Show4by4 /> : <Show6by6 />}
         </div>
       </section>
+      {editName && (
+        <div id="changeNameContainer">
+          <div id="changeNameContainerTextDiv">
+            <div>Change name</div>
+            <img src={closeIcon} alt="" id="closeChangeName" onClick={()=>{seteditName(false)}}/>
+          </div>
+          <div id="changeNameInputSection">
+            <input type="text" id="changeNameInput" placeholder="Enter name (minimum 2 letters)" onChange={(e)=>setholdTempName(e.target.value)}/>
+            <button id="saveNameButton" onClick={()=>{
+              if(holdTempName.length < 2){
+                alert("name is too short")
+                return
+              }
+              updatingUserProfile(holdTempName);
+              seteditName(false);
+            }}>SAVE</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

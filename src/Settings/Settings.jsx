@@ -96,7 +96,7 @@ function Settings() {
             </div>
             <div className="selectModeItemsTextDiv">Letters</div>
           </div>
-          <div className="selectModeItemsDiv" onClick={() => imagesMode()}>
+          {/* <div className="selectModeItemsDiv" onClick={() => imagesMode()}>
             <div className="selectModeItemsImgDiv">
               <div className="selectModeItemsSelectOuter">
                 {currectGameInfo.mode === "images" && (
@@ -105,7 +105,7 @@ function Settings() {
               </div>
             </div>
             <div className="selectModeItemsTextDiv">Images</div>
-          </div>
+          </div> */}
         </div>
       </section>
       <section id="numberOfPlayersSection">

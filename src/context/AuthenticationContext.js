@@ -19,6 +19,8 @@ export function AuthProvider({children}) {
     
     let [displayName, setDisplayName] = useState()
 
+    let userAvatar = "avatar4"
+
     let [isLoggedIn, setIsLoggedIn] = useState()
 
     const user = auth.currentUser;
@@ -33,13 +35,13 @@ export function AuthProvider({children}) {
 
 
     let [username, setusername] = useState();
+    let [receiveUserAvatar, setreceiveUserAvatar] = useState();
     let userUid ;
-
-
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
             setusername(user.displayName)
+            setreceiveUserAvatar(user.photoURL)
             userUid = auth.currentUser.uid
             setIsLoggedIn(true);
         } else {}
@@ -51,6 +53,7 @@ export function AuthProvider({children}) {
         .then(()=>{
             if (auth.currentUser) {
                 updatingUserProfile(displayName)
+                updatingUserAvatar(userAvatar)
                 addUserToDatabase()
                 setIsLoggedIn(true)
             } else {
@@ -66,15 +69,23 @@ export function AuthProvider({children}) {
         .then(()=>{
             setIsLoggedIn(true)
             setusername(auth.currentUser.displayName)
+            setreceiveUserAvatar(auth.currentUser.photoURL)
         })  
     }
 
     
     function updatingUserProfile(name){
         updateProfile(auth.currentUser,{
-            displayName: name
+            displayName: name,
         }).then(()=>{
             setusername(auth.currentUser.displayName)
+        })
+    }
+    function updatingUserAvatar(userAvatar){
+        updateProfile(auth.currentUser,{
+            photoURL: userAvatar
+        }).then(()=>{
+            setreceiveUserAvatar(auth.currentUser.photoURL)
         })
     }
 
@@ -127,6 +138,15 @@ export function AuthProvider({children}) {
         }).catch(err => console.log(err));
     }
 
+  function reverseArr(arr){
+        let newArr = []
+        for(let i=0;i<arr.length;i++){
+            newArr.unshift(arr[i])
+        }
+        return newArr;
+    }
+
+
     let [TotalGamesPlayed4by4, setTotalGamesPlayed4by4] = useState(0)
     let [AverageTime4by4, setAverageTime4by4] = useState(0)
     let [AverageScore4by4, setAverageScore4by4] = useState(0)
@@ -144,6 +164,7 @@ export function AuthProvider({children}) {
     let [FastestTime6by6, setFastestTime6by6] = useState(0)
 
 
+  
 
 
 
@@ -160,20 +181,24 @@ export function AuthProvider({children}) {
 
     let userScore;
     let timeSpent;
-    let date = new Date().toLocaleString();
 
+    let today = new Date();
+    let year = today.getFullYear();
+    let mes = today.getMonth()+1;
+    let dia = today.getDate();
+    let date = mes+"-"+dia+"-"+year;
 
     let [TotalGamesPlayed, setTotalGamesPlayed] = useState(0)
     let [TotalGamesWon, setTotalGamesWon] = useState(0)
     let [TotalGamesLost, setTotalGamesLost] = useState(0)
 
-    let [gameWon, setgameWon] = useState(true)
+    let [gameWon, setgameWon] = useState()
     let [modeIs4by4, setmodeIs4by4] = useState(true)
 
     function gameEnded(timeleft, score) {
         userScore = score;
         timeSpent = timeleft
-        if (score <= 0){
+        if (score <= 10){
             setgameWon(false)
         }else{
             setgameWon(true)
@@ -186,7 +211,6 @@ export function AuthProvider({children}) {
     const onGameEnd = async() => {
         if(!user)return;
         if (auth.currentUser){
-            console.log(userUid)
             if(modeIs4by4){
                 let tempTotalGamesPlayed;
 
@@ -207,6 +231,7 @@ export function AuthProvider({children}) {
                         date: date,
                         score: userScore,
                         timeSpent: timeSpent,
+                        id: Date.now()
                     }),
                     
                 })
@@ -363,6 +388,7 @@ export function AuthProvider({children}) {
                     })
                 }).catch((err) => console.log(err.message))
             }
+            await updateLeaderBoards()
              //updating docs after every game
              getDoc(doc(db, `users/${userUid}/scores`, "4by4"))
              .then((response) => {
@@ -396,7 +422,7 @@ export function AuthProvider({children}) {
                     return displayTime     
 
                 })
-                setGamesArray4by4(userBasicInfoResult.scoreInfo)
+                setGamesArray4by4(reverseArr(userBasicInfoResult.scoreInfo))
              })
              getDoc(doc(db, `users/${userUid}/scores`, "6by6"))
              .then((response) => {
@@ -430,7 +456,7 @@ export function AuthProvider({children}) {
 
                 })
                  setTotalGamesPlayed6by6(userBasicInfoResult.TotalGames);
-                 setGamesArray6by6(userBasicInfoResult.scoreInfo)
+                 setGamesArray6by6(reverseArr(userBasicInfoResult.scoreInfo))
 
              })
              getDoc(doc(db, "users", `${userUid}`))
@@ -446,9 +472,88 @@ export function AuthProvider({children}) {
         
     }
 
+// updating LeaderBoards
+let [LeaderBoardArray4By4, setLeaderBoardArray4By4] = useState([])
+let [LeaderBoardArray6By6, setLeaderBoardArray6By6] = useState([])
+async function updateLeaderBoards(){
+    if(!user)return;
+    if(modeIs4by4){
+        let sortedScores2 
+        await getDoc(doc(db, "leaderboard", "4By4"))
+        .then((reponse)=>{
+            let result = reponse.data().Info;
+            let sortedScores = result.sort((a,b)=> {return parseFloat(b.Score) - parseFloat(a.Score)})
+            if(sortedScores.length < 10){
+                sortedScores.push({
+                    Email: auth.currentUser.email,
+                    Index: sortedScores.length,
+                    Score: userScore
+                })
+            }else{
+                if(userScore > sortedScores[9].Score){
+                    sortedScores[9] = {
+                        Email: auth.currentUser.email,
+                        Index: sortedScores.length ,
+                        Score: userScore
+                    }
+                }
+            }
+            sortedScores2 = sortedScores.sort((a,b)=> {return parseFloat(b.Score) - parseFloat(a.Score)})
+        })
+        .then(async()=>{
+            await updateDoc(doc(db, "leaderboard", "4By4"),{
+                Info: sortedScores2
+            })
+        })
+        .catch(error=>{console.log(error.message)})
+        .finally(async()=>{
+            await getDoc(doc(db, "leaderboard", "4By4"))
+            .then((res)=>{
+                setLeaderBoardArray4By4(res.data().Info)
+            })
+        })
+    }else{
+        let sortedScores2 
+        await getDoc(doc(db, "leaderboard", "6By6"))
+        .then((reponse)=>{
+            let result = reponse.data().Info;
+            let sortedScores = result.sort((a,b)=> {return parseFloat(b.Score) - parseFloat(a.Score)})
+            if(sortedScores.length < 10){
+                sortedScores.push({
+                    Email: auth.currentUser.email,
+                    Index: sortedScores.length,
+                    Score: userScore
+                })
+            }else{
+                if(userScore > sortedScores[9].Score){
+                    sortedScores[9] = {
+                        Email: auth.currentUser.email,
+                        Index: sortedScores.length ,
+                        Score: userScore
+                    }
+                }
+            }
+            sortedScores2 = sortedScores.sort((a,b)=> {return parseFloat(b.Score) - parseFloat(a.Score)})
+        })
+        .then(async()=>{
+            await updateDoc(doc(db, "leaderboard", "6By6"),{
+                Info: sortedScores2
+            })
+        })
+        .catch(error=>{console.log(error.message)})
+        .finally(async()=>{
+            await getDoc(doc(db, "leaderboard", "6By6"))
+            .then((res)=>{
+                setLeaderBoardArray6By6(res.data().Info)
+            })
+        })
+    }
+}
+
+
 // getting docs on load completed
     useEffect(()=>{
-        onAuthStateChanged(auth, (user)=>{
+        onAuthStateChanged(auth, async(user)=>{
             if(user){
                 
                 getDoc(doc(db, `users/${userUid}/scores`, "4by4"))
@@ -483,7 +588,7 @@ export function AuthProvider({children}) {
                         return displayTime     
 
                     })
-                    setGamesArray4by4(userBasicInfoResult.scoreInfo)
+                    setGamesArray4by4(reverseArr(userBasicInfoResult.scoreInfo))
                 })
                 getDoc(doc(db, `users/${userUid}/scores`, "6by6"))
                 .then((response) => {
@@ -517,7 +622,7 @@ export function AuthProvider({children}) {
 
                     })
                     setTotalGamesPlayed6by6(userBasicInfoResult.TotalGames);
-                    setGamesArray6by6(userBasicInfoResult.scoreInfo)
+                    setGamesArray6by6(reverseArr(userBasicInfoResult.scoreInfo))
                 })
                 getDoc(doc(db, "users", `${userUid}`))
                 .then((response) => {
@@ -526,13 +631,20 @@ export function AuthProvider({children}) {
                     setTotalGamesPlayed(userBasicInfoResult.TotalGamesPlayed)
                     setTotalGamesWon(userBasicInfoResult.TotalGamesWon)
                     setTotalGamesLost(userBasicInfoResult.TotalGamesLost)
-                })                
+                })     
+                await getDoc(doc(db, "leaderboard", "4By4"))
+                .then((res)=>{
+                    setLeaderBoardArray4By4(res.data().Info)
+                }) 
+                await getDoc(doc(db, "leaderboard", "6By6"))
+                .then((res)=>{
+                    setLeaderBoardArray6By6(res.data().Info)
+                })
+                      
             }
         })
     },[user])
 
-
-  
     return(
         <AuthContext.Provider value={{CreateNewUser, signInExistingUser, onAuthStateChanged,
                                         setDisplayName,updatingUserProfile,username,
@@ -543,7 +655,9 @@ export function AuthProvider({children}) {
 
                                         AverageTime4by4, AverageScore4by4, HighestScore4by4, ScoresArray4by4, AverageTime6by6, AverageScore6by6, HighestScore6by6, ScoresArray6by6,
                                         TotalGamesPlayed, TotalGamesLost, TotalGamesWon,
-                                        FastestTime4by4, FastestTime6by6, TotalGamesPlayed4by4, TotalGamesPlayed6by6,GamesArray4by4,GamesArray6by6
+                                        FastestTime4by4, FastestTime6by6, TotalGamesPlayed4by4, TotalGamesPlayed6by6,GamesArray4by4,GamesArray6by6,
+
+                                        receiveUserAvatar,updatingUserAvatar,LeaderBoardArray4By4,LeaderBoardArray6By6
                                         
                                         }}>
             {children}

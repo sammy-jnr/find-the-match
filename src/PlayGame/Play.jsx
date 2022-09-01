@@ -53,10 +53,12 @@ function Play() {
     setlettersArrayL(shuffle(lettersArrayTempL));
   },[])
 
-  let By4 = true;
-  let By6 = false;
+  let [By4, setBy4] = useState(true);
+  let [By6, setBy6] = useState(false);
 
   let mainArray = [];
+
+
   if (currectGameInfo.mode === "numbers") {
     if (currectGameInfo.gridSize === "6by6") {
       mainArray = numbersArrayL;
@@ -78,22 +80,29 @@ function Play() {
       mainArray = numbersArray;
     }
   }
-  if (currectGameInfo.gridSize === "4by4") {
-    By4 = true;
-    By6 = false;
-    setmodeIs4by4(true);
-  }
-  if (currectGameInfo.gridSize === "6by6") {
-    By4 = false;
-    By6 = true;
-    setmodeIs4by4(false);
-  }
+  useEffect(()=>{
+    if (currectGameInfo.gridSize === "4by4") {
+      setBy4(true);
+      setBy6(false);
+      setmodeIs4by4(true);
+      console.log("false");
+      
+    }
+    if (currectGameInfo.gridSize === "6by6") {
+      setBy4(false);
+      setBy6(true);
+      setmodeIs4by4(false);
+      console.log("true")
+    }
+  },[])
+  
 
   useEffect(() => {
     playersScores[0].score = 0;
     playersScores[1].score = 0;
     playersScores[2].score = 0;
     playersScores[3].score = 0;
+    setnumberOfAttempts(0);
   }, []);
 
   let playerNumber = currectGameInfo.numberOfPlayers;
@@ -605,7 +614,7 @@ function Play() {
   };
 
   let [TotalTime, setTotalTime] = useState(() => {
-    if (By4) {
+    if (currectGameInfo.gridSize === "4by4") {
       return 50;
     } else {
       return 700;
@@ -621,8 +630,6 @@ function Play() {
 
   let isgameEnded = false;
 
-  let [gameEndedForTimerUseEffect, setgameEndedForTimerUseEffect] = useState(false);
-
   function calculateScore() {
     if (By4 && AreadyOpenedArray.length < 8) {
       setgameWon(false);
@@ -633,36 +640,34 @@ function Play() {
     } else {
       setgameWon(true);
     }
-    let a = AreadyOpenedArray.length * 4;
+    let a = AreadyOpenedArray.length * 2;
     let b = numberOfMoves * 1.5;
-    let c = 200 - b;
-    return a + secondTimeLeft + c;
+    return a + TotalTime - b + 1;
   }
 
   function endGame() {
     settimeSpent(secondTimeLeft);
     if (AreadyOpenedArray.length > 13 && By4) {
-      console.log("gameEnded");
       let score = calculateScore();
       gameEnded(secondTimeLeft, score);
-      setgameEndedForTimerUseEffect(true);
+      clearInterval(myinterval)
       setTimeout(() => {
         navigate("/result");
       }, 1500);
     }
-    if (AreadyOpenedArray.length > 34 && By6) {
+    if (AreadyOpenedArray.length > 33 && By6) {
       console.log("gameEnded");
       let score = calculateScore();
       gameEnded(secondTimeLeft, score);
-      setgameEndedForTimerUseEffect(true);
+      clearInterval(myinterval)
       setTimeout(() => {
         navigate("/result");
       }, 1500);
     }
     if (TotalTime <= 0 && !isgameEnded) {
-        setgameEndedForTimerUseEffect(true);
         setTimeout(() => {
         navigate("/result");
+        clearInterval(myinterval)
       }, 1500);
       let score = calculateScore();
       gameEnded(secondTimeLeft, score);
@@ -713,15 +718,13 @@ function Play() {
     };
   }, [SecondChoosenItem]);
 
+  let myinterval
   useEffect(() => {
-    let myinterval = setInterval(function () {
+      myinterval = setInterval(function () {
       if (TotalTime < 0) {
         clearInterval(myinterval);
         endGame();
         return;
-      }
-      if (gameEndedForTimerUseEffect) {
-        clearInterval(myinterval);
       }
       if (gameOver) {
         clearInterval(myinterval);
