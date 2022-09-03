@@ -12,6 +12,7 @@ import ForgotPassword from "./SignUp/ForgotPassword";
 import ProfilePage from "./Profile/ProfilePage";
 import SelectAvatars from "./Profile/SelectAvatars";
 import LeaderBoard from "./LeaderBoard/LeaderBoard";
+import PrivateRoutes from "./PrivateRoutes";
 
 function App() {
   return (
@@ -26,8 +27,10 @@ function App() {
           <Route path="/signup" element={<SignUp/>}/>
           <Route path="/signin" element={<SignIn/>}/>
           <Route path="/resetPassword" element={<ForgotPassword/>}/>
-          <Route path="/profilepage" element={<ProfilePage/>}/>
-          <Route path="/profilepage/avatars" element={<SelectAvatars/>}/>
+          <Route element={<PrivateRoutes/>}>
+            <Route path="/profilepage" element={<ProfilePage/>}/>
+            <Route path="/profilepage/avatars" element={<SelectAvatars/>}/>
+          </Route>
           <Route path="/leaderboard" element={<LeaderBoard/>}/>
         </Routes>
       </div>

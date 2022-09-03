@@ -84,9 +84,7 @@ function Play() {
     if (currectGameInfo.gridSize === "4by4") {
       setBy4(true);
       setBy6(false);
-      setmodeIs4by4(true);
-      console.log("false");
-      
+      setmodeIs4by4(true);      
     }
     if (currectGameInfo.gridSize === "6by6") {
       setBy4(false);

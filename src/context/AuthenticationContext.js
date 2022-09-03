@@ -23,6 +23,9 @@ export function AuthProvider({children}) {
 
     let [isLoggedIn, setIsLoggedIn] = useState()
 
+
+    let [isLoading, setIsLoading] = useState(true)
+
     const user = auth.currentUser;
     
     useEffect(() => {
@@ -44,11 +47,15 @@ export function AuthProvider({children}) {
             setreceiveUserAvatar(user.photoURL)
             userUid = auth.currentUser.uid
             setIsLoggedIn(true);
-        } else {}
+            setIsLoading(false);
+        } else {
+            setIsLoading(false);
+        }
     })
 
 
     async function CreateNewUser(email, password){
+        setIsLoading(true);
         return await createUserWithEmailAndPassword (auth, email,  password)
         .then(()=>{
             if (auth.currentUser) {
@@ -56,6 +63,7 @@ export function AuthProvider({children}) {
                 updatingUserAvatar(userAvatar)
                 addUserToDatabase()
                 setIsLoggedIn(true)
+                setIsLoading(false);
             } else {
                 console.log("something went wrong")
             }
@@ -65,11 +73,14 @@ export function AuthProvider({children}) {
 
 
     async function signInExistingUser(email, password) {
+        setIsLoading(true);
         return await signInWithEmailAndPassword(auth, email, password)
         .then(()=>{
             setIsLoggedIn(true)
             setusername(auth.currentUser.displayName)
             setreceiveUserAvatar(auth.currentUser.photoURL)
+            setIsLoading(false);
+            console.log(isLoading)
         })  
     }
 
@@ -88,9 +99,6 @@ export function AuthProvider({children}) {
             setreceiveUserAvatar(auth.currentUser.photoURL)
         })
     }
-
-    
-    
     
 
     const logOut = () => {
@@ -487,14 +495,16 @@ async function updateLeaderBoards(){
                 sortedScores.push({
                     Email: auth.currentUser.email,
                     Index: sortedScores.length,
-                    Score: userScore
+                    Score: userScore,
+                    Avatar: auth.currentUser.photoURL
                 })
             }else{
                 if(userScore > sortedScores[9].Score){
                     sortedScores[9] = {
                         Email: auth.currentUser.email,
                         Index: sortedScores.length ,
-                        Score: userScore
+                        Score: userScore,
+                        Avatar: auth.currentUser.photoURL
                     }
                 }
             }
@@ -522,14 +532,16 @@ async function updateLeaderBoards(){
                 sortedScores.push({
                     Email: auth.currentUser.email,
                     Index: sortedScores.length,
-                    Score: userScore
+                    Score: userScore,
+                    Avatar: auth.currentUser.photoURL
                 })
             }else{
                 if(userScore > sortedScores[9].Score){
                     sortedScores[9] = {
                         Email: auth.currentUser.email,
                         Index: sortedScores.length ,
-                        Score: userScore
+                        Score: userScore,
+                        Avatar: auth.currentUser.photoURL
                     }
                 }
             }
@@ -657,7 +669,7 @@ async function updateLeaderBoards(){
                                         TotalGamesPlayed, TotalGamesLost, TotalGamesWon,
                                         FastestTime4by4, FastestTime6by6, TotalGamesPlayed4by4, TotalGamesPlayed6by6,GamesArray4by4,GamesArray6by6,
 
-                                        receiveUserAvatar,updatingUserAvatar,LeaderBoardArray4By4,LeaderBoardArray6By6
+                                        receiveUserAvatar,updatingUserAvatar,LeaderBoardArray4By4,LeaderBoardArray6By6,isLoading
                                         
                                         }}>
             {children}

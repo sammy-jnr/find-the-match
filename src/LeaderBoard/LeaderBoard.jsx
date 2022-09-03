@@ -1,13 +1,19 @@
-import React,{ useContext, useState, useEffect} from 'react'
+import React,{ useContext, useEffect} from 'react'
 import menuIcon from "../Assets/icons/menuIconBlack.svg";
 import { GeneralContext } from "../context/MainContext";
 import { AuthContext } from "../context/AuthenticationContext";
+import { useLocation } from "react-router-dom";
 import "./LeaderBoard.css"
 
 function LeaderBoard() {
     const { setmenuOpen } = useContext(GeneralContext);
     const { LeaderBoardArray4By4, LeaderBoardArray6By6 } = useContext(AuthContext);
-    
+    const location = useLocation();
+
+    useEffect(() => {
+      setmenuOpen(false);
+    }, [location]);
+  
   return (
     <div id='leaderboardContainer'>
         <section id="leaderboardMenu">
