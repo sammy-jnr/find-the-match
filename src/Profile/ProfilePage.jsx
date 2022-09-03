@@ -10,11 +10,6 @@ import { GeneralContext } from "../context/MainContext";
 import { AuthContext } from "../context/AuthenticationContext";
 
 function ProfilePage() {
-
-
-
-  
-
   const navigate = useNavigate();
 
   const { setmenuOpen } = useContext(GeneralContext);
@@ -23,11 +18,9 @@ function ProfilePage() {
     AverageTime4by4,
     AverageScore4by4,
     HighestScore4by4,
-    ScoresArray4by4,
     AverageTime6by6,
     AverageScore6by6,
     HighestScore6by6,
-    ScoresArray6by6,
     TotalGamesPlayed,
     TotalGamesWon,
     TotalGamesLost,
@@ -38,7 +31,7 @@ function ProfilePage() {
     FastestTime6by6,
     TotalGamesPlayed6by6,
     updatingUserProfile,
-    receiveUserAvatar
+    receiveUserAvatar,
   } = useContext(AuthContext);
 
   const location = useLocation();
@@ -46,31 +39,28 @@ function ProfilePage() {
     setmenuOpen(false);
   }, [location]);
 
-  let [selectedAvatar, setselectedAvatar] = useState()
+  let [selectedAvatar, setselectedAvatar] = useState();
 
   useEffect(() => {
     const fetchImage = async () => {
       try {
-          const response = await import(`../Assets/Avatars/${receiveUserAvatar}.jpg`) 
-          setselectedAvatar(response.default)
+        const response = await import(
+          `../Assets/Avatars/${receiveUserAvatar}.jpg`
+        );
+        setselectedAvatar(response.default);
       } catch (err) {
-          console.log(err)
+        console.log(err);
       }
-  }
+    };
 
-  fetchImage()
-  },[receiveUserAvatar])
-
-  
+    fetchImage();
+  }, [receiveUserAvatar]);
 
   let [fourByFour, setfourByFour] = useState(true);
 
   let [usingFirstFive4By4, setusingFirstFive4By4] = useState(true);
   let [usingFirstFive6By6, setusingFirstFive6By6] = useState(true);
 
-
-  
-  
   let firstFiveArray4By4 = [];
   GamesArray4by4.forEach((item) => {
     if (firstFiveArray4By4.length < 5) {
@@ -94,7 +84,7 @@ function ProfilePage() {
       setusedArray4By4(firstFiveArray4By4);
     }
   }
-  
+
   function setfinal6By6() {
     if (usingFirstFive6By6) {
       setusedArray6By6(GamesArray6by6);
@@ -106,7 +96,6 @@ function ProfilePage() {
     setusedArray4By4(firstFiveArray4By4);
     setusedArray6By6(firstFiveArray6By6);
   }, [GamesArray4by4, GamesArray6by6]);
-
 
   function convertTimeFormat(time) {
     let seconds = Math.floor(time % 60);
@@ -161,9 +150,7 @@ function ProfilePage() {
           {usedArray4By4.map((item, index) => {
             return (
               <div className="last5GamesItems" key={index}>
-                <div className="last5GamesItemsInner">
-                  {item.date}
-                </div>
+                <div className="last5GamesItemsInner">{item.date}</div>
                 <div className="last5GamesItemsInner">{item.score}</div>
                 <div className="last5GamesItemsInner">
                   {convertTimeFormat(item.timeSpent)}
@@ -221,12 +208,9 @@ function ProfilePage() {
             <div className="gameHistoryCategories">Time Spent</div>
           </div>
           {usedArray6By6.map((item, index) => {
-            console.log(item.date);
             return (
               <div className="last5GamesItems" key={index}>
-                <div className="last5GamesItemsInner">
-                  {item.date}
-                </div>
+                <div className="last5GamesItemsInner">{item.date}</div>
                 <div className="last5GamesItemsInner">{item.score}</div>
                 <div className="last5GamesItemsInner">
                   {convertTimeFormat(item.timeSpent)}
@@ -258,9 +242,8 @@ function ProfilePage() {
     );
   }
 
-  let [editName, seteditName] = useState(false)
+  let [editName, seteditName] = useState(false);
   let [holdTempName, setholdTempName] = useState();
-
 
   const SelectedA = {
     backgroundColor: "#041e29",
@@ -276,15 +259,24 @@ function ProfilePage() {
     <div id="profileContainer">
       <section id="HeaderSecction">
         <div id="HeaderSecctionInner">
-          <div id="profileAvatar" 
-            onClick={()=>{
+          <div
+            id="profileAvatar"
+            onClick={() => {
               navigate("avatars");
             }}
-          > <img src={selectedAvatar} alt="" id="avatarImage"/> </div>
-          <div id="profileName">
-            {username} 
+          >
+            {" "}
+            <img src={selectedAvatar} alt="" id="avatarImage" />{" "}
           </div>
-          <img src={pencilIcon} alt=""  id="pencilIcon" onClick={()=>{seteditName(true)}}/>
+          <div id="profileName">{username}</div>
+          <img
+            src={pencilIcon}
+            alt=""
+            id="pencilIcon"
+            onClick={() => {
+              seteditName(true);
+            }}
+          />
         </div>
         <img
           src={menuIcon}
@@ -337,18 +329,35 @@ function ProfilePage() {
         <div id="changeNameContainer">
           <div id="changeNameContainerTextDiv">
             <div>Change name</div>
-            <img src={closeIcon} alt="" id="closeChangeName" onClick={()=>{seteditName(false)}}/>
+            <img
+              src={closeIcon}
+              alt=""
+              id="closeChangeName"
+              onClick={() => {
+                seteditName(false);
+              }}
+            />
           </div>
           <div id="changeNameInputSection">
-            <input type="text" id="changeNameInput" placeholder="Enter name (minimum 2 letters)" onChange={(e)=>setholdTempName(e.target.value)}/>
-            <button id="saveNameButton" onClick={()=>{
-              if(holdTempName.length < 2){
-                alert("name is too short")
-                return
-              }
-              updatingUserProfile(holdTempName);
-              seteditName(false);
-            }}>SAVE</button>
+            <input
+              type="text"
+              id="changeNameInput"
+              placeholder="Enter name (minimum 2 letters)"
+              onChange={(e) => setholdTempName(e.target.value)}
+            />
+            <button
+              id="saveNameButton"
+              onClick={() => {
+                if (holdTempName.length < 2) {
+                  alert("name is too short");
+                  return;
+                }
+                updatingUserProfile(holdTempName);
+                seteditName(false);
+              }}
+            >
+              SAVE
+            </button>
           </div>
         </div>
       )}

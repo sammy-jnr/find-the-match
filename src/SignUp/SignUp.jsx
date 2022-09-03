@@ -32,23 +32,19 @@ function SignUp() {
     e.preventDefault();
     if (name.length < 4) {
       setisNameCorrect(false);
+      return
     }
     if (!email.includes("@")) {
       setisEmailCorrect(false);
+      return
     }
     if (password !== confirmPassword) {
       setisPasswordSame(false);
+      return
     }
     if (password.length < 6 || password === 123456) {
       setisPasswordStrong(false);
-    }
-    if (
-      !isPasswordSame ||
-      !isPasswordStrong ||
-      !isEmailCorrect ||
-      !isNameCorrect
-    ) {
-      return;
+      return
     }
     try {
       await CreateNewUser(email, password).then(() => {
@@ -86,6 +82,7 @@ function SignUp() {
             onChange={(e) => {
               setDisplayName(e.target.value);
               setname(e.target.value);
+              setisNameCorrect(true)
             }}
           />
           {!isNameCorrect && (
@@ -100,7 +97,10 @@ function SignUp() {
             type="email"
             name="emailInput"
             id="emailInput"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value)
+              setisEmailCorrect(true)
+            }}
           />
           {!isEmailCorrect && (
             <div className="errorTexts">
@@ -118,7 +118,11 @@ function SignUp() {
               type={showPassword ? "text" : "password"}
               name="passwordInput"
               id="passwordInput"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value)
+                setisPasswordSame(true)
+                setisPasswordStrong(true)
+              }}
             />
             {!showPassword && <img src={showPasswordIcon} alt="" className="EYEImage" onClick={() => setshowPassword(prev => !prev)}/>}
             {showPassword && <img src={hidePasswordIcon} alt="" className="EYEImage" onClick={() => setshowPassword(prev => !prev)}/>}
@@ -139,7 +143,11 @@ function SignUp() {
               type={showPassword ? "text" : "password"}
               name="confirmPasswordInput"
               id="confirmPasswordInput"
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value)
+                setisPasswordSame(true)
+                setisPasswordStrong(true)
+              }}
             />
             {!showPassword && <img src={showPasswordIcon} alt="" className="EYEImage" onClick={() => setshowPassword(prev => !prev)}/>}
             {showPassword && <img src={hidePasswordIcon} alt="" className="EYEImage" onClick={() => setshowPassword(prev => !prev)}/>}

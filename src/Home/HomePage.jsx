@@ -3,6 +3,7 @@ import "./HomePage.css"
 import menuIcon from "../Assets/icons/menuIcon.svg"
 import {GeneralContext} from "../context/MainContext"
 import { Link, useLocation } from 'react-router-dom'
+import homeImg from "../Assets/homePageImage2.png"
 
 
 function HomePage() {
@@ -22,7 +23,7 @@ function HomePage() {
       </section>
       <section id='homePageContent'>
         <div id='homePageContentImageDiv'>
-
+          <img src={homeImg} alt="" id='homePageImg'/>
         </div>
         <p id='homePageContentTextDiv'>
           Find And Match The Correct Pair

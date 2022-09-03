@@ -638,7 +638,7 @@ function Play() {
     } else {
       setgameWon(true);
     }
-    let a = AreadyOpenedArray.length * 2;
+    let a = AreadyOpenedArray.length * 4;
     let b = numberOfMoves * 1.5;
     return a + TotalTime - b + 1;
   }
@@ -736,7 +736,7 @@ function Play() {
         if (By4) {
           return 51 - TotalTime;
         } else {
-          return 701 - TotalTime;
+          return 301 - TotalTime;
         }
       });
       if (seconds < 10) {
@@ -1447,7 +1447,14 @@ function Play() {
         )}
       </div>
       <section id="endGameBtnDiv">
-        <button id="endGameBtn">Forfeit </button>
+        <button id="endGameBtn" onClick={()=>{
+          let score = calculateScore();
+          gameEnded(secondTimeLeft, score);
+          clearInterval(myinterval)
+          setTimeout(() => {
+            navigate("/result");
+          }, 1500);
+        }}>Forfeit </button>
       </section>
     </div>
   );

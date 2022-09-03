@@ -80,7 +80,6 @@ export function AuthProvider({children}) {
             setusername(auth.currentUser.displayName)
             setreceiveUserAvatar(auth.currentUser.photoURL)
             setIsLoading(false);
-            console.log(isLoading)
         })  
     }
 
@@ -644,18 +643,25 @@ async function updateLeaderBoards(){
                     setTotalGamesWon(userBasicInfoResult.TotalGamesWon)
                     setTotalGamesLost(userBasicInfoResult.TotalGamesLost)
                 })     
-                await getDoc(doc(db, "leaderboard", "4By4"))
-                .then((res)=>{
-                    setLeaderBoardArray4By4(res.data().Info)
-                }) 
-                await getDoc(doc(db, "leaderboard", "6By6"))
-                .then((res)=>{
-                    setLeaderBoardArray6By6(res.data().Info)
-                })
+                
                       
             }
         })
     },[user])
+
+    useEffect(() => {
+        async function fetchLeaderboardDataOnReload(){
+            await getDoc(doc(db, "leaderboard", "4By4"))
+            .then((res)=>{
+                setLeaderBoardArray4By4(res.data().Info)
+            }) 
+            await getDoc(doc(db, "leaderboard", "6By6"))
+            .then((res)=>{
+                setLeaderBoardArray6By6(res.data().Info)
+            })
+        }
+        fetchLeaderboardDataOnReload()
+    },[])
 
     return(
         <AuthContext.Provider value={{CreateNewUser, signInExistingUser, onAuthStateChanged,
