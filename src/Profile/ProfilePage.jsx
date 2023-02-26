@@ -128,7 +128,8 @@ function ProfilePage() {
           <div className="last5GamesText">
             Games Hisory
             <div
-              id="dislayAmountToggle"
+              id="displayAmountToggle"
+              className="hoverable"
               onClick={() => {
                 setusingFirstFive4By4((prev) => !prev);
                 setfinal4By4();
@@ -266,13 +267,14 @@ function ProfilePage() {
             }}
           >
             {" "}
-            <img src={selectedAvatar} alt="" id="avatarImage" />{" "}
+            <img src={selectedAvatar} alt="" id="avatarImage" className="hoverable" />{" "}
           </div>
           <div id="profileName">{username}</div>
           <img
             src={pencilIcon}
             alt=""
             id="pencilIcon"
+            className="hoverable"
             onClick={() => {
               seteditName(true);
             }}
@@ -304,6 +306,7 @@ function ProfilePage() {
           <div
             style={fourByFour ? SelectedA : NotSelectedA}
             id="profileSelection4by4"
+            className="hoverable"
             onClick={() => setfourByFour(true)}
           >
             4*4
@@ -311,6 +314,7 @@ function ProfilePage() {
           <div
             style={fourByFour ? NotSelectedA : SelectedA}
             id="profileSelection6by6"
+            className="hoverable"
             onClick={() => setfourByFour(false)}
           >
             6*6

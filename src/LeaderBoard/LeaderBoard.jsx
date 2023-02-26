@@ -31,14 +31,16 @@ function LeaderBoard() {
           {LeaderBoardArray4By4.map((item, index) => {
             return (
               <div className="top10Items" key={index}>
-                <div className="top10ItemsImage">
-                  <img
-                    src={require(`../Assets/Avatars/${item.Avatar}.jpg`)}
-                    alt=""
-                    className="avatarsImg"
-                  />
+                <div className="emailImageContainer">
+                  <div className="top10ItemsImage">
+                    <img
+                      src={require(`../Assets/Avatars/${item.Avatar}.jpg`)}
+                      alt=""
+                      className="avatarsImg"
+                    />
+                  </div>
+                  <div className="top10ItemsEmail">{item.Email}</div>
                 </div>
-                <div className="top10ItemsEmail">{item.Email}</div>
                 <div className="top10ItemsScore">{item.Score}</div>
               </div>
             );
@@ -51,14 +53,16 @@ function LeaderBoard() {
           {LeaderBoardArray6By6.map((item, index) => {
             return (
               <div className="top10Items" key={index}>
-                <div className="top10ItemsImage">
-                  <img
-                    src={require(`../Assets/Avatars/${item.Avatar}.jpg`)}
-                    alt=""
-                    className="avatarsImg"
-                  />
-                </div>
-                <div className="top10ItemsEmail">{item.Email}</div>
+                <div className="emailImageContainer">
+                  <div className="top10ItemsImage">
+                    <img
+                      src={require(`../Assets/Avatars/${item.Avatar}.jpg`)}
+                      alt=""
+                      className="avatarsImg"
+                    />
+                  </div>
+                  <div className="top10ItemsEmail">{item.Email}</div>
+                  </div>
                 <div className="top10ItemsScore">{item.Score}</div>
               </div>
             );

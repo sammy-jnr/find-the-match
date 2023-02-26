@@ -5,11 +5,15 @@
     font-family: 'Roboto', sans-serif;
 }
 #leaderboardContainer{
-    width: 100%;
     min-height: 100%;
+    background-color: #042c2e;
+    /* overflow: auto; */
+    color: #fffdf0;
 }
 .leaderboardContainers{
     padding: 10px;
+    display: flex;
+    flex-direction: column;
 }
 #leaderboardMenuIcon{
     margin-left: auto;
@@ -21,7 +25,7 @@
 }
 .leaderboardContainersTitle{
     text-align: center;
-    margin: 30px;
+    margin: 40px 30px;
     font-size: 22px;
     font-weight: 500;
 }
@@ -36,10 +40,15 @@
     justify-content: center;
 }
 .top10Items{
+    max-width: 800px;
     display: grid;
-    grid-template-columns: 15% 70% 15% ;
+    grid-template-columns: 85% 15% ;
     align-items: center;
-    margin: 25px 0;
+    margin: 25px auto;
+}
+.emailImageContainer{
+    display: flex;
+    align-items: center;
 }
 .top10ItemsImage{
     width: 30px;
@@ -49,6 +58,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-right: 30px;
 }
 .avatarsImg{
     width: 30px;

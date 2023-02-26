@@ -19,18 +19,19 @@ function HomePage() {
     <div id='homepageContainer'>
       <section id='homeHeader'>
         <p id='homeHeaderText'>Matchup</p>
-        <img src={menuIcon} alt='' onClick={()=>setmenuOpen(true)}/>
+        <img src={menuIcon} alt='' className='hoverable' onClick={()=>setmenuOpen(true)}/>
       </section>
       <section id='homePageContent'>
-        <div id='homePageContentImageDiv'>
-          <img src={homeImg} alt="" id='homePageImg'/>
-        </div>
         <p id='homePageContentTextDiv'>
           Find And Match The Correct Pair
         </p>
+        <div id='homePageContentImageDiv'>
+          <img src={homeImg} alt="" id='homePageImg'/>
+        </div>
+        
       </section>
       <section id='homePageStartButtonDiv'>
-        <Link to={"/settings"} className = "links"><button id='homePageStartButton'>START</button></Link>
+        <Link to={"/settings"} className = "links"><button className='hoverable' id='homePageStartButton'>START</button></Link>
       </section>
     </div>
   )

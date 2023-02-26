@@ -47,7 +47,7 @@ function Navigation() {
                     </div>
                     <p id='navProfileName'>{username}</p>
                 </div>
-                <img src={closeIcon} alt="" className="basicIcons" id='closeIcon' onClick={()=>setmenuOpen(false)}/>
+                <img src={closeIcon} alt="" className="basicIcons hoverable" id='closeIcon' onClick={()=>setmenuOpen(false)}/>
             </div>
         }
         {!isLoggedIn && <img src={closeIcon} alt="" className="basicIcons" id='closeIcon2' onClick={()=>setmenuOpen(false)}/>}

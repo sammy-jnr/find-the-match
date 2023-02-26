@@ -65,6 +65,7 @@ function Settings() {
       <section id="skipSettingsSection">
         <div
           id="skipSettingsSectionDiv"
+          className="hoverable"
           onClick={() => {
             navigate("/startgame");
           }}
@@ -73,10 +74,10 @@ function Settings() {
           <p>SKIP</p>
         </div>
       </section>
-      <section id="selectModeSection">
+      <section id="selectModeSection" className="settingsSections">
         <h3 id="selectModeTitle">Mode</h3>
         <div id="selectModeInner">
-          <div className="selectModeItemsDiv" onClick={() => numbersMode()}>
+          <div className="selectModeItemsDiv hoverable" onClick={() => numbersMode()}>
             <div className="selectModeItemsImgDiv">
               <div className="selectModeItemsSelectOuter">
                 {currectGameInfo.mode === "numbers" && (
@@ -86,7 +87,7 @@ function Settings() {
             </div>
             <div className="selectModeItemsTextDiv">Numbers</div>
           </div>
-          <div className="selectModeItemsDiv" onClick={() => lettersMode()}>
+          <div className="selectModeItemsDiv hoverable" onClick={() => lettersMode()}>
             <div className="selectModeItemsImgDiv">
               <div className="selectModeItemsSelectOuter">
                 {currectGameInfo.mode === "letters" && (
@@ -108,11 +109,11 @@ function Settings() {
           </div> */}
         </div>
       </section>
-      <section id="numberOfPlayersSection">
+      <section id="numberOfPlayersSection" className="settingsSections">
         <h3 id="selectNumberOfPlayersTitle">Number of players</h3>
         <div id="numberOfPlayersInner">
           <div
-            className="numberOfPlayersItems"
+            className="numberOfPlayersItems hoverable"
             onClick={() => {
               numbersOfP1();
             }}
@@ -127,7 +128,7 @@ function Settings() {
             <div className="numberOfPlayersTextDiv">Solo</div>
           </div>
           <div
-            className="numberOfPlayersItems"
+            className="numberOfPlayersItems hoverable"
             onClick={() => {
               numbersOfP2();
             }}
@@ -142,7 +143,7 @@ function Settings() {
             <div className="numberOfPlayersTextDiv">2 Players</div>
           </div>
           <div
-            className="numberOfPlayersItems"
+            className="numberOfPlayersItems hoverable"
             onClick={() => {
               numbersOfP3();
             }}
@@ -157,7 +158,7 @@ function Settings() {
             <div className="numberOfPlayersTextDiv">3 Players</div>
           </div>
           <div
-            className="numberOfPlayersItems"
+            className="numberOfPlayersItems hoverable"
             onClick={() => {
               numbersOfP4();
             }}
@@ -173,12 +174,12 @@ function Settings() {
           </div>
         </div>
       </section>
-      <section id="gridSizeSection">
+      <section id="gridSizeSection" className="settingsSections">
         <h3 id="grigSizeTitle">Grid size</h3>
         <div id="gridSizeInner">
           {currectGameInfo.gridSize === "4by4" && (
             <div
-              className="gridSizeItems"
+              className="gridSizeItems hoverable"
               style={Selected}
               onClick={() => gridIs4()}
             >
@@ -187,7 +188,7 @@ function Settings() {
           )}
           {currectGameInfo.gridSize !== "4by4" && (
             <div
-              className="gridSizeItems"
+              className="gridSizeItems hoverable"
               style={NotSelected}
               onClick={() => gridIs4()}
             >
@@ -196,7 +197,7 @@ function Settings() {
           )}
           {currectGameInfo.gridSize === "6by6" && (
             <div
-              className="gridSizeItems"
+              className="gridSizeItems hoverable"
               style={Selected}
               onClick={() => gridIs6()}
             >
@@ -205,7 +206,7 @@ function Settings() {
           )}
           {currectGameInfo.gridSize !== "6by6" && (
             <div
-              className="gridSizeItems"
+              className="gridSizeItems hoverable"
               style={NotSelected}
               onClick={() => gridIs6()}
             >
@@ -217,7 +218,7 @@ function Settings() {
       <section id="startGameSection">
         <Link to={"/startgame"}>
           {" "}
-          <button id="startGameButton">START GAME</button>
+          <button id="startGameButton" className="hoverable">START GAME</button>
         </Link>
       </section>
     </div>

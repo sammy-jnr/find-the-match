@@ -5,8 +5,10 @@
     font-family: 'Roboto', sans-serif;
 }
 #playGameContainer{
-    width: 100vw;
-    min-height: 100vh;
+    height: 100vh;
+    background-color: #042c2e;
+    color: #fffdf0;
+    overflow: auto;
 }
 #playGameHeader{
     display: flex;
@@ -28,15 +30,19 @@
     gap: 10px;
     padding: 10px;
     margin-top: 35px;
+    height: calc(100% - 210px);
 }
 .gridContainerItems{
     width: 100%;
-    height: 100px;
+    min-height: 100px;
     background-color: rgb(165, 23, 23);
     font-size: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.gridContainerItems:hover{
+    cursor: pointer;
 }
 #PlayerInfoSection{
     height: auto;
@@ -98,8 +104,12 @@
     text-align: end;
 }
 #resultContainer{
-    width: 100vw;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: auto;
+    background-color: #042c2e;
+    color: #fffdf0;
+    display: flex;
+    flex-direction: column;
 }
 #gameOverText{
     padding: 40px 0;
@@ -110,12 +120,14 @@
     font-weight: 900;
 }
 #scoreAreaContainer{
+    width: 90%;
+    max-width: 1000px;
+    margin: 10px auto;
     background-color: #5c005c;
     min-height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10px;
     border-radius: 20px;
     color: #ebebeb;
     border-radius: 16px;

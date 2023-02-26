@@ -3,7 +3,9 @@ import "./Play.css";
 import { Link, useNavigate } from "react-router-dom";
 import menuIcon from "../Assets/icons/menuIcon.svg";
 import { GeneralContext } from "../context/MainContext";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { auth } from "../Firebase/FirebaseHosting";
+
 
 function Result() {
   const navigate = useNavigate();
@@ -119,14 +121,18 @@ function Result() {
       >
         New Game
       </button>
-      <section id="signInText">
+      {!auth.currentUser &&
         <div>
-          <Link to="/signin" className="links3"> Sign In </Link> to save your score
-        </div>
-      </section>
-      <section id="leaderBoardText">
-        Check the <Link to="" className="links3">Leaderboards</Link>{" "}
-      </section>
+        <section id="signInText">
+          <div>
+            <Link to="/signin" className="links3"> Sign In </Link> to save your score
+          </div>
+        </section>
+        <section id="leaderBoardText">
+          Check the <Link to="" className="links3">Leaderboards</Link>{" "}
+        </section>
+      </div>}
+      
     </div>
   );
 }

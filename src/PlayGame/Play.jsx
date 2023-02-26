@@ -1447,7 +1447,7 @@ function Play() {
         )}
       </div>
       <section id="endGameBtnDiv">
-        <button id="endGameBtn" onClick={()=>{
+        <button id="endGameBtn" className="hoverable" onClick={()=>{
           let score = calculateScore();
           gameEnded(secondTimeLeft, score);
           clearInterval(myinterval)

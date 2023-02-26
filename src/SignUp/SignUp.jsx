@@ -30,7 +30,7 @@ function SignUp() {
 
   const submitInfo = async (e) => {
     e.preventDefault();
-    if (name.length < 4) {
+    if (name.length < 3) {
       setisNameCorrect(false);
       return
     }

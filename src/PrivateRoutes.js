@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { Outlet, Navigate } from "react-router-dom";
 import { auth } from "./Firebase/FirebaseHosting";
 import { AuthContext } from "./context/AuthenticationContext";

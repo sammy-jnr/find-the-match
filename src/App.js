@@ -17,23 +17,21 @@ import PrivateRoutes from "./PrivateRoutes";
 function App() {
   return (
     <Router>
-      <div className="mainContainer">
-        <Navigation/>
-        <Routes>
-          <Route path="/" element={<HomePage/>}/>
-          <Route path="/settings" element={<Settings/>}/>
-          <Route path="/startgame" element={<Play/>}/>
-          <Route path="/result" element={<Result/>}/>
-          <Route path="/signup" element={<SignUp/>}/>
-          <Route path="/signin" element={<SignIn/>}/>
-          <Route path="/resetPassword" element={<ForgotPassword/>}/>
-          <Route element={<PrivateRoutes/>}>
-            <Route path="/profilepage" element={<ProfilePage/>}/>
-            <Route path="/profilepage/avatars" element={<SelectAvatars/>}/>
-          </Route>
-          <Route path="/leaderboard" element={<LeaderBoard/>}/>
-        </Routes>
-      </div>
+      <Navigation/>
+      <Routes>
+        <Route path="/" element={<HomePage/>}/>
+        <Route path="/settings" element={<Settings/>}/>
+        <Route path="/startgame" element={<Play/>}/>
+        <Route path="/result" element={<Result/>}/>
+        <Route path="/leaderboard" element={<LeaderBoard/>}/>
+        <Route path="/signup" element={<SignUp/>}/>
+        <Route path="/signin" element={<SignIn/>}/>
+        <Route path="/resetPassword" element={<ForgotPassword/>}/>
+        <Route element={<PrivateRoutes/>}>
+          <Route path="/profilepage" element={<ProfilePage/>}/>
+          <Route path="/profilepage/avatars" element={<SelectAvatars/>}/>
+        </Route>
+      </Routes>
     </Router>
     
   );

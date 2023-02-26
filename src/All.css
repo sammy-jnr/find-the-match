@@ -5,14 +5,17 @@
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
 }
-.mainContainer{
+.hoverable:hover{
+    cursor: pointer;
+}
+/* .mainContainer{
     height: auto;
     width: 100vw;
     min-height: 100vh;
     background-color: #042c2e;
     color: #fffdf0;
     overflow: hidden;
-}
+} */
 #navigationContainer{
     width: 100%;
     min-height: 100%;
@@ -132,4 +135,10 @@
   }
   #logoutBtn:active {
     top: 2px;
+  }
+
+  @media screen and (min-width: 1080px) {
+    #navigationContainer{
+        transition: all 0.1s ease-in-out;
+    }
   }
