@@ -1,66 +1,75 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
 }
-#playGameContainer{
+
+#playGameContainer {
     height: 100vh;
     background-color: #042c2e;
     color: #fffdf0;
     overflow: auto;
+    display: flex;
+    flex-direction: column;
 }
-#playGameHeader{
+
+#playGameHeader {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 20px;
 }
-#playGameHeaderInner{
+
+#playGameHeaderInner {
     display: flex;
     align-items: center;
 }
-#playGameTimer{
+
+#playGameTimer {
     margin-left: 50px;
 }
 
-#gridContainer{
+#gridContainer {
+    max-width: calc(100vh - 295px);
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
     padding: 10px;
-    margin-top: 35px;
-    height: calc(100% - 210px);
+    margin: 35px auto;
 }
-.gridContainerItems{
-    width: 100%;
-    min-height: 100px;
-    background-color: rgb(165, 23, 23);
-    font-size: 80px;
+
+.gridContainerItems {
+    width: clamp(60px, 100%, 100%);
+    max-width: calc((100vh - 100px)/4);
+    aspect-ratio: 1/1;
+    background-color: #a51717;
+    font-size: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 5px;
 }
-.gridContainerItems:hover{
+
+.gridContainerItems:hover {
     cursor: pointer;
 }
-#PlayerInfoSection{
+
+#PlayerInfoSection {
     height: auto;
-    
+
 }
-#playPageDisplayScoreDiv{
-    height: auto;
-    border: 2px solid ;
+
+#playPageDisplayScoreDiv {
     margin: 10px 2px;
-    border-radius: 3px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    /* width: 100%; */
-    }
-#playPageDisplayTurn{
+}
+
+#playPageDisplayTurn {
     height: 40px;
-    border: 2px solid ;
+    border: 2px solid;
     margin: 10px 2px;
     border-radius: 3px;
     display: flex;
@@ -69,41 +78,54 @@
     font-size: 20px;
     font-weight: 700;
 }
-.playPageDisplayScores{
-    background-color: rgb(158, 158, 158);
+
+.playPageDisplayScores {
+    background-color: #3f57e2;
+    border-radius: 30px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     /* min-width: 130px; */
-    margin:  10px;
+    margin: 10px;
     width: auto;
-    padding: 10px;
+    padding: 10px 20px;
 }
-.playImages{
+
+.playImages {
     width: 100%;
 }
-#endGameBtnDiv{
+
+#endGameBtnDiv {
     margin: 30px 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: auto;
 }
-#endGameBtn{
-    padding:10px 50px;
+
+#endGameBtn {
+    padding: 10px 50px;
     font-weight: 900;
     font-size: 18px;
-    border: 4px solid orange;
+    border: 4px solid #de9000;
     border-radius: 10px;
     color: #000;
 }
-.showScore{
+
+#endGameBtn:hover {
+    background-color: #de9000;
+    color: white;
+}
+
+.showScore {
     font-size: 18px;
     font-weight: 700;
     width: 35px;
     text-align: end;
 }
-#resultContainer{
+
+#resultContainer {
     height: 100vh;
     overflow: auto;
     background-color: #042c2e;
@@ -111,7 +133,8 @@
     display: flex;
     flex-direction: column;
 }
-#gameOverText{
+
+#gameOverText {
     padding: 40px 0;
     display: flex;
     align-items: center;
@@ -119,10 +142,12 @@
     font-size: 35px;
     font-weight: 900;
 }
-#scoreAreaContainer{
+
+#scoreAreaContainer {
     width: 90%;
-    max-width: 1000px;
+    max-width: 600px;
     margin: 10px auto;
+    padding: 20px;
     background-color: #5c005c;
     min-height: 300px;
     display: flex;
@@ -132,31 +157,38 @@
     color: #ebebeb;
     border-radius: 16px;
     box-shadow: inset 10px 10px 12px #bebebe,
-            inset -10px -10px 12px #ffffff;
+        inset -10px -10px 12px #ffffff;
 }
-#scoreArea{
-    margin: 20px 0  50px 0;
+
+#scoreArea {
+    margin: 20px 0 50px 0;
     font-size: 27px;
     text-align: center;
 }
-#noOfAttemptsText,#timeText{
+
+#noOfAttemptsText,
+#timeText {
     margin-bottom: 20px;
 }
-#winnerDisplayDiv{
+
+#winnerDisplayDiv {
     margin-bottom: 40px;
     text-align: center;
     /* background-color: white; */
 }
-#winner{
+
+#winner {
     margin: 10px 0;
     font-size: 26px;
 }
-#winnerText{
+
+#winnerText {
     font-size: 35px;
     font-weight: 700;
     letter-spacing: 1.3px;
 }
-#newGameBtn{
+
+#newGameBtn {
     left: 50%;
     position: relative;
     transform: translateX(-50%);
@@ -167,27 +199,55 @@
     border: none;
     font-size: 17px;
     font-weight: 600;
-    background-color: grey;
+    background-color: #c1c1c1;
+    color: #242424;
+    box-shadow: 0px 5px #5d5d5d;
 }
-#signInText{
+#newGameBtn:hover{
+    background-color: #5d5d5d;
+    color: white;
+    top: 2px;
+    box-shadow: 4px -4px #b5b5b5;
+}
+
+#signInText {
     padding: 10px;
     margin-top: 100px;
     font-size: 15px;
 }
-#resultLoginButton{
+
+#resultLoginButton {
     padding: 7px 20px;
     font-weight: 600;
     margin: 10px 0;
 }
-#leaderBoardText{
+
+#leaderBoardText {
     padding: 10px;
     font-size: 15px;
 }
-.scoreArea2Items{
+
+.scoreArea2Items {
     margin: 20px 0;
     text-align: center;
-    font-size: 20px;
+    font-size: 25px;
 }
-.links3{
+.scoreArea2ItemsName{
+    font-size: 14px;
+}
+
+.links3 {
     color: rgb(152, 152, 248);
+}
+
+@media screen and (min-width:481px) {
+    .gridContainerItems {
+        font-size: 60px;
+    }
+}
+
+@media screen and (min-width:481px) {
+    .gridContainerItems {
+        font-size: 70px;
+    }
 }

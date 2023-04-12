@@ -12,10 +12,16 @@
     display: flex;
     flex-direction: column;
 }
+.signContainerInner{
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding-top: 50px;
+}
 #signupMenuIcon{
-    margin-left: auto;
-    margin-right: 30px;
-    margin-top: 35px;
+    top: 30px;
+    right: 30px;
+    position: absolute;
 }
 #signupMenu{
     display: flex;
@@ -36,7 +42,7 @@
     padding: 15px;
 }
 .signupMiniText,.signinMiniText{
-    font-size: 13px;
+    font-size: 15px;
     margin-top: 25px;
 }
 #emailInput,#nameInput{
@@ -46,7 +52,6 @@
     border: none;
     border-bottom: 2px solid gray;
     background-color: transparent;
-    color: white;
     
 }
 #confirmPasswordInput,#passwordInput{
@@ -55,7 +60,6 @@
     font-size: 15.5px;
     border: none;
     background-color: transparent;
-    color: white;
     
 }
 .errorTexts{
@@ -71,7 +75,6 @@
     border: none;
     border-bottom: 2px solid grey;
     background-color: transparent;
-    color: white;
 }
 #passwordInputsignIn{
     width: 100%;
@@ -79,14 +82,14 @@
     font-size: 15.5px;
     border: none;
     background-color: transparent;
-    color: white;
 }
 #submitDiv{
     width: 100%;
-    margin: 50px 0;
+    margin: 0px 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 80px;
 }
 #submitDivSignin{
     width: 100%;
@@ -98,20 +101,29 @@
 }
 #signupSubmitButton,#signinSubmitButton{
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border-radius: 25px;
     border: none;
     font-size: 17px;
-    font-weight: 600;
-    
+    font-weight: 600;    
+    background-color: #bebec8;
+    color: #212121;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#signupSubmitButton:hover,#signinSubmitButton:hover{
+    background-color: #444444;
+    color: white;
 }
 .links2{
-    color: #aaaaf3;
+    color: #4949ff;
     margin: 0 10px;
 }
 #signupExtras,#signinExtras{
     padding: 0 15px ;
     margin-top: 10px;
+    font-size: 14px;
 }
 #refForgotPasssword{
     margin: 0;
@@ -123,6 +135,12 @@
     display: flex;
     flex-direction: column;
 }
+.resetPasswordBack{
+    width: 25px;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+}
 #emailInputForgotPassword{
     width: 100%;
     height: 35px;
@@ -132,7 +150,7 @@
     color: white;
 }
 #forgotPasswordDiv{
-    margin: 30px 10px;
+    margin: 30px 20px;
 }
 #forgotPasswordMiniText{
     font-size: 15px;

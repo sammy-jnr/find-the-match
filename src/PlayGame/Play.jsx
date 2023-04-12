@@ -16,6 +16,7 @@ function Play() {
     setnumberOfAttempts,
     settimeSpent,
     setsinglePlayerScore,
+    playerNames,
   } = useContext(GeneralContext);
 
   const { gameEnded, setmodeIs4by4, setgameWon } = useContext(AuthContext);
@@ -27,37 +28,94 @@ function Play() {
 
   let navigate = useNavigate();
 
-  let  [numbersArray, setnumbersArray] = useState();
-  let  [lettersArray, setlettersArray] = useState();
-  let  [numbersArrayL, setnumbersArrayL] = useState();
-  let  [lettersArrayL, setlettersArrayL] = useState();
+  let [numbersArray, setnumbersArray] = useState();
+  let [lettersArray, setlettersArray] = useState();
+  let [numbersArrayL, setnumbersArrayL] = useState();
+  let [lettersArrayL, setlettersArrayL] = useState();
 
   useEffect(() => {
     function shuffle(array) {
-        let currentIndex = array.length,  randomIndex;
-        while (currentIndex !== 0) {
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex--;
-            [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex], array[currentIndex]];
-        }
-        return array;
+      let currentIndex = array.length,
+        randomIndex;
+      while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [
+          array[randomIndex],
+          array[currentIndex],
+        ];
+      }
+      return array;
     }
-    let numberArrayTemp = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8]
+    let numberArrayTemp = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
     setnumbersArray(shuffle(numberArrayTemp));
-    let lettersArrayTemp = ['A','A','B','B','C','C','D','D','E','E','F','F','G','G','H','H'];
+    let lettersArrayTemp = [
+      "A",
+      "A",
+      "B",
+      "B",
+      "C",
+      "C",
+      "D",
+      "D",
+      "E",
+      "E",
+      "F",
+      "F",
+      "G",
+      "G",
+      "H",
+      "H",
+    ];
     setlettersArray(shuffle(lettersArrayTemp));
-    let numberArrayTempL = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16,17,17,18,18]
+    let numberArrayTempL = [
+      1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12,
+      12, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17, 18, 18,
+    ];
     setnumbersArrayL(shuffle(numberArrayTempL));
-    let lettersArrayTempL = ['A','A','B','B','C','C','D','D','E','E','F','F','G','G','H','H',"I","I",'J',"J","k","k","L","L","M","M","O","O","P","P","Q","Q","R","R"]
+    let lettersArrayTempL = [
+      "A",
+      "A",
+      "B",
+      "B",
+      "C",
+      "C",
+      "D",
+      "D",
+      "E",
+      "E",
+      "F",
+      "F",
+      "G",
+      "G",
+      "H",
+      "H",
+      "I",
+      "I",
+      "J",
+      "J",
+      "k",
+      "k",
+      "L",
+      "L",
+      "M",
+      "M",
+      "O",
+      "O",
+      "P",
+      "P",
+      "Q",
+      "Q",
+      "R",
+      "R",
+    ];
     setlettersArrayL(shuffle(lettersArrayTempL));
-  },[])
+  }, []);
 
   let [By4, setBy4] = useState(true);
   let [By6, setBy6] = useState(false);
 
   let mainArray = [];
-
 
   if (currectGameInfo.mode === "numbers") {
     if (currectGameInfo.gridSize === "6by6") {
@@ -80,20 +138,19 @@ function Play() {
       mainArray = numbersArray;
     }
   }
-  useEffect(()=>{
+  useEffect(() => {
     if (currectGameInfo.gridSize === "4by4") {
       setBy4(true);
       setBy6(false);
-      setmodeIs4by4(true);      
+      setmodeIs4by4(true);
     }
     if (currectGameInfo.gridSize === "6by6") {
       setBy4(false);
       setBy6(true);
       setmodeIs4by4(false);
-      console.log("true")
+      console.log("true");
     }
-  },[])
-  
+  }, []);
 
   useEffect(() => {
     playersScores[0].score = 0;
@@ -615,20 +672,18 @@ function Play() {
     if (currectGameInfo.gridSize === "4by4") {
       return 50;
     } else {
-      return 700;
+      return 300;
     }
   });
   let [timeLeft, settimeLeft] = useState();
+
   let [secondTimeLeft, setsecondTimeLeft] = useState();
   let [numberOfMoves, setnumberOfMoves] = useState(0);
-
-  let [whichPlayerWon, setwhichPlayerWon] = useState(0);
-
-  let [singleplayerResult, setsingleplayerResult] = useState(0);
 
   let isgameEnded = false;
 
   function calculateScore() {
+    //TODO console.log this out
     if (By4 && AreadyOpenedArray.length < 8) {
       setgameWon(false);
     } else if (By4 && AreadyOpenedArray.length >= 8) {
@@ -638,36 +693,50 @@ function Play() {
     } else {
       setgameWon(true);
     }
-    let a = AreadyOpenedArray.length * 4;
-    let b = numberOfMoves * 1.5;
-    return a + TotalTime - b + 1;
+    // total time here represent the current time after total time has been decreased during the course of the game
+    if (By4) {
+      if (AreadyOpenedArray.length < 14) {
+        return Math.floor((AreadyOpenedArray.length / 14) * 50);
+      }
+      return Math.floor(
+        100 -
+          (TotalTime / 50) * 70 -
+          ((numberOfMoves - 16) / (numberOfMoves + 1)) * 30
+      );
+    } else {
+      if (AreadyOpenedArray.length < 34) {
+        return Math.floor((AreadyOpenedArray.length / 34) * 50);
+      }
+      return Math.floor(
+        100 -
+          (TotalTime / 300) * 70 -
+          ((numberOfMoves - 36) / (numberOfMoves + 1)) * 30
+      );
+    }
   }
 
   function endGame() {
     settimeSpent(secondTimeLeft);
     if (AreadyOpenedArray.length > 13 && By4) {
       let score = calculateScore();
+      setsinglePlayerScore(score);
       gameEnded(secondTimeLeft, score);
-      clearInterval(myinterval)
-      setTimeout(() => {
-        navigate("/result");
-      }, 1500);
+      clearInterval(myinterval);
+      navigate("/result");
     }
     if (AreadyOpenedArray.length > 33 && By6) {
       console.log("gameEnded");
       let score = calculateScore();
+      setsinglePlayerScore(score);
       gameEnded(secondTimeLeft, score);
-      clearInterval(myinterval)
-      setTimeout(() => {
-        navigate("/result");
-      }, 1500);
+      clearInterval(myinterval);
+      navigate("/result");
     }
     if (TotalTime <= 0 && !isgameEnded) {
-        setTimeout(() => {
-        navigate("/result");
-        clearInterval(myinterval)
-      }, 1500);
+      navigate("/result");
+      clearInterval(myinterval);
       let score = calculateScore();
+      setsinglePlayerScore(score);
       gameEnded(secondTimeLeft, score);
       isgameEnded = true;
     }
@@ -693,8 +762,6 @@ function Play() {
       changeScore(currentPlayer);
       setnumberOfAttempts((prev) => prev + 1);
       setnumberOfMoves((prev) => prev + 1);
-      setsingleplayerResult(calculateScore());
-      setsinglePlayerScore(singleplayerResult);
       endGame();
     } else {
       myTimeout = setTimeout(function () {
@@ -706,8 +773,6 @@ function Play() {
         checkPlayer();
         setnumberOfAttempts((prev) => prev + 1);
         setnumberOfMoves((prev) => prev + 1);
-        setsingleplayerResult(calculateScore());
-        setsinglePlayerScore(singleplayerResult);
       }, 1000);
     }
 
@@ -716,9 +781,9 @@ function Play() {
     };
   }, [SecondChoosenItem]);
 
-  let myinterval
+  let myinterval;
   useEffect(() => {
-      myinterval = setInterval(function () {
+    myinterval = setInterval(function () {
       if (TotalTime < 0) {
         clearInterval(myinterval);
         endGame();
@@ -772,9 +837,18 @@ function Play() {
             {Array(parseInt(playerNumber))
               .fill(2)
               .map((item, index) => {
+                console.log(index, currentPlayer);
                 return (
-                  <div className="playPageDisplayScores" key={index}>
-                    PLAYER {index + 1}{" "}
+                  <div
+                    className="playPageDisplayScores"
+                    key={index}
+                    style={
+                      currentPlayer === index + 1
+                        ? { backgroundColor: "#051886" }
+                        : {}
+                    }
+                  >
+                    {playerNames[`player${index + 1}`] ?? `PLAYER ${index + 1}`}
                     <div className="showScore">
                       {playersScores[index].score}
                     </div>
@@ -782,679 +856,682 @@ function Play() {
                 );
               })}
           </div>
-          <div id="playPageDisplayTurn">
-            {gameOver ? "Game Over" : `Player${currentPlayer}`}{" "}
-          </div>
         </section>
       )}
-      <div
-        id="gridContainer"
-        style={{
-          gridTemplateColumns: By6 ? "repeat(6, 1fr)" : "repeat(4, 1fr)",
-        }}
-      >
+      <div className="gridContainerOuter">
         <div
+          id="gridContainer"
           style={{
-            backgroundColor:
-              isOpenBox1 && !isAcceptedBox1
-                ? "grey"
-                : isAcceptedBox1
-                ? "green"
-                : "red",
+            gridTemplateColumns: By6 ? "repeat(6, 1fr)" : "repeat(4, 1fr)",
           }}
-          onClick={(e) => {
-            PlayGame(e);
-          }}
-          className="gridContainerItems"
-          id="4By4Box1"
         >
-          {isOpenBox1 ? mainArray[0] : ""}
+          <div
+            style={{
+              backgroundColor:
+                isOpenBox1 && !isAcceptedBox1
+                  ? "grey"
+                  : isAcceptedBox1
+                  ? "green"
+                  : "red",
+            }}
+            onClick={(e) => {
+              PlayGame(e);
+            }}
+            className="gridContainerItems"
+            id="4By4Box1"
+          >
+            {isOpenBox1 ? mainArray[0] : ""}
+          </div>
+          <div
+            style={{
+              backgroundColor:
+                isOpenBox2 && !isAcceptedBox2
+                  ? "grey"
+                  : isAcceptedBox2
+                  ? "green"
+                  : "red",
+            }}
+            onClick={(e) => {
+              PlayGame(e);
+            }}
+            className="gridContainerItems"
+            id="4By4Box2"
+          >
+            {isOpenBox2 ? mainArray[1] : ""}
+          </div>
+          <div
+            style={{
+              backgroundColor:
+                isOpenBox3 && !isAcceptedBox3
+                  ? "grey"
+                  : isAcceptedBox3
+                  ? "green"
+                  : "red",
+            }}
+            onClick={(e) => {
+              PlayGame(e);
+            }}
+            className="gridContainerItems"
+            id="4By4Box3"
+          >
+            {isOpenBox3 ? mainArray[2] : ""}
+          </div>
+          <div
+            style={{
+              backgroundColor:
+                isOpenBox4 && !isAcceptedBox4
+                  ? "grey"
+                  : isAcceptedBox4
+                  ? "green"
+                  : "red",
+            }}
+            onClick={(e) => {
+              PlayGame(e);
+            }}
+            className="gridContainerItems"
+            id="4By4Box4"
+          >
+            {isOpenBox4 ? mainArray[3] : ""}
+          </div>
+          <div
+            style={{
+              backgroundColor:
+                isOpenBox5 && !isAcceptedBox5
+                  ? "grey"
+                  : isAcceptedBox5
+                  ? "green"
+                  : "red",
+            }}
+            onClick={(e) => {
+              PlayGame(e);
+            }}
+            className="gridContainerItems"
+            id="4By4Box5"
+          >
+            {isOpenBox5 ? mainArray[4] : ""}
+          </div>
+          <div
+            style={{
+              backgroundColor:
+                isOpenBox6 && !isAcceptedBox6
+                  ? "grey"
+                  : isAcceptedBox6
+                  ? "green"
+                  : "red",
+            }}
+            onClick={(e) => {
+              PlayGame(e);
+            }}
+            className="gridContainerItems"
+            id="4By4Box6"
+          >
+            {isOpenBox6 ? mainArray[5] : ""}
+          </div>
+          <div
+            style={{
+              backgroundColor:
+                isOpenBox7 && !isAcceptedBox7
+                  ? "grey"
+                  : isAcceptedBox7
+                  ? "green"
+                  : "red",
+            }}
+            onClick={(e) => {
+              PlayGame(e);
+            }}
+            className="gridContainerItems"
+            id="4By4Box7"
+          >
+            {isOpenBox7 ? mainArray[6] : ""}
+          </div>
+          <div
+            style={{
+              backgroundColor:
+                isOpenBox8 && !isAcceptedBox8
+                  ? "grey"
+                  : isAcceptedBox8
+                  ? "green"
+                  : "red",
+            }}
+            onClick={(e) => {
+              PlayGame(e);
+            }}
+            className="gridContainerItems"
+            id="4By4Box8"
+          >
+            {isOpenBox8 ? mainArray[7] : ""}
+          </div>
+          <div
+            style={{
+              backgroundColor:
+                isOpenBox9 && !isAcceptedBox9
+                  ? "grey"
+                  : isAcceptedBox9
+                  ? "green"
+                  : "red",
+            }}
+            onClick={(e) => {
+              PlayGame(e);
+            }}
+            className="gridContainerItems"
+            id="4By4Box9"
+          >
+            {isOpenBox9 ? mainArray[8] : ""}
+          </div>
+          <div
+            style={{
+              backgroundColor:
+                isOpenBox10 && !isAcceptedBox10
+                  ? "grey"
+                  : isAcceptedBox10
+                  ? "green"
+                  : "red",
+            }}
+            onClick={(e) => {
+              PlayGame(e);
+            }}
+            className="gridContainerItems"
+            id="4By4Box10"
+          >
+            {isOpenBox10 ? mainArray[9] : ""}
+          </div>
+          <div
+            style={{
+              backgroundColor:
+                isOpenBox11 && !isAcceptedBox11
+                  ? "grey"
+                  : isAcceptedBox11
+                  ? "green"
+                  : "red",
+            }}
+            onClick={(e) => {
+              PlayGame(e);
+            }}
+            className="gridContainerItems"
+            id="4By4Box11"
+          >
+            {isOpenBox11 ? mainArray[10] : ""}
+          </div>
+          <div
+            style={{
+              backgroundColor:
+                isOpenBox12 && !isAcceptedBox12
+                  ? "grey"
+                  : isAcceptedBox12
+                  ? "green"
+                  : "red",
+            }}
+            onClick={(e) => {
+              PlayGame(e);
+            }}
+            className="gridContainerItems"
+            id="4By4Box12"
+          >
+            {isOpenBox12 ? mainArray[11] : ""}
+          </div>
+          <div
+            style={{
+              backgroundColor:
+                isOpenBox13 && !isAcceptedBox13
+                  ? "grey"
+                  : isAcceptedBox13
+                  ? "green"
+                  : "red",
+            }}
+            onClick={(e) => {
+              PlayGame(e);
+            }}
+            className="gridContainerItems"
+            id="4By4Box13"
+          >
+            {isOpenBox13 ? mainArray[12] : ""}
+          </div>
+          <div
+            style={{
+              backgroundColor:
+                isOpenBox14 && !isAcceptedBox14
+                  ? "grey"
+                  : isAcceptedBox14
+                  ? "green"
+                  : "red",
+            }}
+            onClick={(e) => {
+              PlayGame(e);
+            }}
+            className="gridContainerItems"
+            id="4By4Box14"
+          >
+            {isOpenBox14 ? mainArray[13] : ""}
+          </div>
+          <div
+            style={{
+              backgroundColor:
+                isOpenBox15 && !isAcceptedBox15
+                  ? "grey"
+                  : isAcceptedBox15
+                  ? "green"
+                  : "red",
+            }}
+            onClick={(e) => {
+              PlayGame(e);
+            }}
+            className="gridContainerItems"
+            id="4By4Box15"
+          >
+            {isOpenBox15 ? mainArray[14] : ""}
+          </div>
+          <div
+            style={{
+              backgroundColor:
+                isOpenBox16 && !isAcceptedBox16
+                  ? "grey"
+                  : isAcceptedBox16
+                  ? "green"
+                  : "red",
+            }}
+            onClick={(e) => {
+              PlayGame(e);
+            }}
+            className="gridContainerItems"
+            id="4By4Box16"
+          >
+            {isOpenBox16 ? mainArray[15] : ""}
+          </div>
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox17 && !isAcceptedBox17
+                    ? "grey"
+                    : isAcceptedBox17
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box17"
+            >
+              {isOpenBox17 ? mainArray[16] : ""}
+            </div>
+          )}
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox18 && !isAcceptedBox18
+                    ? "grey"
+                    : isAcceptedBox18
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box18"
+            >
+              {isOpenBox18 ? mainArray[17] : ""}
+            </div>
+          )}
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox19 && !isAcceptedBox19
+                    ? "grey"
+                    : isAcceptedBox19
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box19"
+            >
+              {isOpenBox19 ? mainArray[18] : ""}
+            </div>
+          )}
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox20 && !isAcceptedBox20
+                    ? "grey"
+                    : isAcceptedBox20
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box20"
+            >
+              {isOpenBox20 ? mainArray[19] : ""}
+            </div>
+          )}
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox21 && !isAcceptedBox21
+                    ? "grey"
+                    : isAcceptedBox21
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box21"
+            >
+              {isOpenBox21 ? mainArray[20] : ""}
+            </div>
+          )}
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox22 && !isAcceptedBox22
+                    ? "grey"
+                    : isAcceptedBox22
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box22"
+            >
+              {isOpenBox22 ? mainArray[21] : ""}
+            </div>
+          )}
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox23 && !isAcceptedBox23
+                    ? "grey"
+                    : isAcceptedBox23
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box23"
+            >
+              {isOpenBox23 ? mainArray[22] : ""}
+            </div>
+          )}
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox24 && !isAcceptedBox24
+                    ? "grey"
+                    : isAcceptedBox24
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box24"
+            >
+              {isOpenBox24 ? mainArray[23] : ""}
+            </div>
+          )}
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox25 && !isAcceptedBox25
+                    ? "grey"
+                    : isAcceptedBox25
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box25"
+            >
+              {isOpenBox25 ? mainArray[24] : ""}
+            </div>
+          )}
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox26 && !isAcceptedBox26
+                    ? "grey"
+                    : isAcceptedBox26
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box26"
+            >
+              {isOpenBox26 ? mainArray[25] : ""}
+            </div>
+          )}
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox27 && !isAcceptedBox27
+                    ? "grey"
+                    : isAcceptedBox27
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box27"
+            >
+              {isOpenBox27 ? mainArray[26] : ""}
+            </div>
+          )}
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox28 && !isAcceptedBox28
+                    ? "grey"
+                    : isAcceptedBox28
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box28"
+            >
+              {isOpenBox28 ? mainArray[27] : ""}
+            </div>
+          )}
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox29 && !isAcceptedBox29
+                    ? "grey"
+                    : isAcceptedBox29
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box29"
+            >
+              {isOpenBox29 ? mainArray[28] : ""}
+            </div>
+          )}
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox30 && !isAcceptedBox30
+                    ? "grey"
+                    : isAcceptedBox30
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box30"
+            >
+              {isOpenBox30 ? mainArray[29] : ""}
+            </div>
+          )}
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox31 && !isAcceptedBox31
+                    ? "grey"
+                    : isAcceptedBox31
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box31"
+            >
+              {isOpenBox31 ? mainArray[30] : ""}
+            </div>
+          )}
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox32 && !isAcceptedBox32
+                    ? "grey"
+                    : isAcceptedBox32
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box32"
+            >
+              {isOpenBox32 ? mainArray[31] : ""}
+            </div>
+          )}
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox33 && !isAcceptedBox33
+                    ? "grey"
+                    : isAcceptedBox33
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box33"
+            >
+              {isOpenBox33 ? mainArray[32] : ""}
+            </div>
+          )}
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox34 && !isAcceptedBox34
+                    ? "grey"
+                    : isAcceptedBox34
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box34"
+            >
+              {isOpenBox34 ? mainArray[33] : ""}
+            </div>
+          )}
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox35 && !isAcceptedBox35
+                    ? "grey"
+                    : isAcceptedBox35
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box35"
+            >
+              {isOpenBox35 ? mainArray[34] : ""}
+            </div>
+          )}
+          {By6 && (
+            <div
+              style={{
+                backgroundColor:
+                  isOpenBox36 && !isAcceptedBox36
+                    ? "grey"
+                    : isAcceptedBox36
+                    ? "green"
+                    : "red",
+              }}
+              onClick={(e) => {
+                PlayGame(e);
+              }}
+              className="gridContainerItems"
+              id="4By4Box36"
+            >
+              {isOpenBox36 ? mainArray[35] : ""}
+            </div>
+          )}
         </div>
-        <div
-          style={{
-            backgroundColor:
-              isOpenBox2 && !isAcceptedBox2
-                ? "grey"
-                : isAcceptedBox2
-                ? "green"
-                : "red",
-          }}
-          onClick={(e) => {
-            PlayGame(e);
-          }}
-          className="gridContainerItems"
-          id="4By4Box2"
-        >
-          {isOpenBox2 ? mainArray[1] : ""}
-        </div>
-        <div
-          style={{
-            backgroundColor:
-              isOpenBox3 && !isAcceptedBox3
-                ? "grey"
-                : isAcceptedBox3
-                ? "green"
-                : "red",
-          }}
-          onClick={(e) => {
-            PlayGame(e);
-          }}
-          className="gridContainerItems"
-          id="4By4Box3"
-        >
-          {isOpenBox3 ? mainArray[2] : ""}
-        </div>
-        <div
-          style={{
-            backgroundColor:
-              isOpenBox4 && !isAcceptedBox4
-                ? "grey"
-                : isAcceptedBox4
-                ? "green"
-                : "red",
-          }}
-          onClick={(e) => {
-            PlayGame(e);
-          }}
-          className="gridContainerItems"
-          id="4By4Box4"
-        >
-          {isOpenBox4 ? mainArray[3] : ""}
-        </div>
-        <div
-          style={{
-            backgroundColor:
-              isOpenBox5 && !isAcceptedBox5
-                ? "grey"
-                : isAcceptedBox5
-                ? "green"
-                : "red",
-          }}
-          onClick={(e) => {
-            PlayGame(e);
-          }}
-          className="gridContainerItems"
-          id="4By4Box5"
-        >
-          {isOpenBox5 ? mainArray[4] : ""}
-        </div>
-        <div
-          style={{
-            backgroundColor:
-              isOpenBox6 && !isAcceptedBox6
-                ? "grey"
-                : isAcceptedBox6
-                ? "green"
-                : "red",
-          }}
-          onClick={(e) => {
-            PlayGame(e);
-          }}
-          className="gridContainerItems"
-          id="4By4Box6"
-        >
-          {isOpenBox6 ? mainArray[5] : ""}
-        </div>
-        <div
-          style={{
-            backgroundColor:
-              isOpenBox7 && !isAcceptedBox7
-                ? "grey"
-                : isAcceptedBox7
-                ? "green"
-                : "red",
-          }}
-          onClick={(e) => {
-            PlayGame(e);
-          }}
-          className="gridContainerItems"
-          id="4By4Box7"
-        >
-          {isOpenBox7 ? mainArray[6] : ""}
-        </div>
-        <div
-          style={{
-            backgroundColor:
-              isOpenBox8 && !isAcceptedBox8
-                ? "grey"
-                : isAcceptedBox8
-                ? "green"
-                : "red",
-          }}
-          onClick={(e) => {
-            PlayGame(e);
-          }}
-          className="gridContainerItems"
-          id="4By4Box8"
-        >
-          {isOpenBox8 ? mainArray[7] : ""}
-        </div>
-        <div
-          style={{
-            backgroundColor:
-              isOpenBox9 && !isAcceptedBox9
-                ? "grey"
-                : isAcceptedBox9
-                ? "green"
-                : "red",
-          }}
-          onClick={(e) => {
-            PlayGame(e);
-          }}
-          className="gridContainerItems"
-          id="4By4Box9"
-        >
-          {isOpenBox9 ? mainArray[8] : ""}
-        </div>
-        <div
-          style={{
-            backgroundColor:
-              isOpenBox10 && !isAcceptedBox10
-                ? "grey"
-                : isAcceptedBox10
-                ? "green"
-                : "red",
-          }}
-          onClick={(e) => {
-            PlayGame(e);
-          }}
-          className="gridContainerItems"
-          id="4By4Box10"
-        >
-          {isOpenBox10 ? mainArray[9] : ""}
-        </div>
-        <div
-          style={{
-            backgroundColor:
-              isOpenBox11 && !isAcceptedBox11
-                ? "grey"
-                : isAcceptedBox11
-                ? "green"
-                : "red",
-          }}
-          onClick={(e) => {
-            PlayGame(e);
-          }}
-          className="gridContainerItems"
-          id="4By4Box11"
-        >
-          {isOpenBox11 ? mainArray[10] : ""}
-        </div>
-        <div
-          style={{
-            backgroundColor:
-              isOpenBox12 && !isAcceptedBox12
-                ? "grey"
-                : isAcceptedBox12
-                ? "green"
-                : "red",
-          }}
-          onClick={(e) => {
-            PlayGame(e);
-          }}
-          className="gridContainerItems"
-          id="4By4Box12"
-        >
-          {isOpenBox12 ? mainArray[11] : ""}
-        </div>
-        <div
-          style={{
-            backgroundColor:
-              isOpenBox13 && !isAcceptedBox13
-                ? "grey"
-                : isAcceptedBox13
-                ? "green"
-                : "red",
-          }}
-          onClick={(e) => {
-            PlayGame(e);
-          }}
-          className="gridContainerItems"
-          id="4By4Box13"
-        >
-          {isOpenBox13 ? mainArray[12] : ""}
-        </div>
-        <div
-          style={{
-            backgroundColor:
-              isOpenBox14 && !isAcceptedBox14
-                ? "grey"
-                : isAcceptedBox14
-                ? "green"
-                : "red",
-          }}
-          onClick={(e) => {
-            PlayGame(e);
-          }}
-          className="gridContainerItems"
-          id="4By4Box14"
-        >
-          {isOpenBox14 ? mainArray[13] : ""}
-        </div>
-        <div
-          style={{
-            backgroundColor:
-              isOpenBox15 && !isAcceptedBox15
-                ? "grey"
-                : isAcceptedBox15
-                ? "green"
-                : "red",
-          }}
-          onClick={(e) => {
-            PlayGame(e);
-          }}
-          className="gridContainerItems"
-          id="4By4Box15"
-        >
-          {isOpenBox15 ? mainArray[14] : ""}
-        </div>
-        <div
-          style={{
-            backgroundColor:
-              isOpenBox16 && !isAcceptedBox16
-                ? "grey"
-                : isAcceptedBox16
-                ? "green"
-                : "red",
-          }}
-          onClick={(e) => {
-            PlayGame(e);
-          }}
-          className="gridContainerItems"
-          id="4By4Box16"
-        >
-          {isOpenBox16 ? mainArray[15] : ""}
-        </div>
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox17 && !isAcceptedBox17
-                  ? "grey"
-                  : isAcceptedBox17
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box17"
-          >
-            {isOpenBox17 ? mainArray[16] : ""}
-          </div>
-        )}
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox18 && !isAcceptedBox18
-                  ? "grey"
-                  : isAcceptedBox18
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box18"
-          >
-            {isOpenBox18 ? mainArray[17] : ""}
-          </div>
-        )}
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox19 && !isAcceptedBox19
-                  ? "grey"
-                  : isAcceptedBox19
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box19"
-          >
-            {isOpenBox19 ? mainArray[18] : ""}
-          </div>
-        )}
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox20 && !isAcceptedBox20
-                  ? "grey"
-                  : isAcceptedBox20
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box20"
-          >
-            {isOpenBox20 ? mainArray[19] : ""}
-          </div>
-        )}
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox21 && !isAcceptedBox21
-                  ? "grey"
-                  : isAcceptedBox21
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box21"
-          >
-            {isOpenBox21 ? mainArray[20] : ""}
-          </div>
-        )}
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox22 && !isAcceptedBox22
-                  ? "grey"
-                  : isAcceptedBox22
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box22"
-          >
-            {isOpenBox22 ? mainArray[21] : ""}
-          </div>
-        )}
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox23 && !isAcceptedBox23
-                  ? "grey"
-                  : isAcceptedBox23
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box23"
-          >
-            {isOpenBox23 ? mainArray[22] : ""}
-          </div>
-        )}
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox24 && !isAcceptedBox24
-                  ? "grey"
-                  : isAcceptedBox24
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box24"
-          >
-            {isOpenBox24 ? mainArray[23] : ""}
-          </div>
-        )}
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox25 && !isAcceptedBox25
-                  ? "grey"
-                  : isAcceptedBox25
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box25"
-          >
-            {isOpenBox25 ? mainArray[24] : ""}
-          </div>
-        )}
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox26 && !isAcceptedBox26
-                  ? "grey"
-                  : isAcceptedBox26
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box26"
-          >
-            {isOpenBox26 ? mainArray[25] : ""}
-          </div>
-        )}
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox27 && !isAcceptedBox27
-                  ? "grey"
-                  : isAcceptedBox27
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box27"
-          >
-            {isOpenBox27 ? mainArray[26] : ""}
-          </div>
-        )}
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox28 && !isAcceptedBox28
-                  ? "grey"
-                  : isAcceptedBox28
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box28"
-          >
-            {isOpenBox28 ? mainArray[27] : ""}
-          </div>
-        )}
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox29 && !isAcceptedBox29
-                  ? "grey"
-                  : isAcceptedBox29
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box29"
-          >
-            {isOpenBox29 ? mainArray[28] : ""}
-          </div>
-        )}
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox30 && !isAcceptedBox30
-                  ? "grey"
-                  : isAcceptedBox30
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box30"
-          >
-            {isOpenBox30 ? mainArray[29] : ""}
-          </div>
-        )}
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox31 && !isAcceptedBox31
-                  ? "grey"
-                  : isAcceptedBox31
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box31"
-          >
-            {isOpenBox31 ? mainArray[30] : ""}
-          </div>
-        )}
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox32 && !isAcceptedBox32
-                  ? "grey"
-                  : isAcceptedBox32
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box32"
-          >
-            {isOpenBox32 ? mainArray[31] : ""}
-          </div>
-        )}
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox33 && !isAcceptedBox33
-                  ? "grey"
-                  : isAcceptedBox33
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box33"
-          >
-            {isOpenBox33 ? mainArray[32] : ""}
-          </div>
-        )}
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox34 && !isAcceptedBox34
-                  ? "grey"
-                  : isAcceptedBox34
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box34"
-          >
-            {isOpenBox34 ? mainArray[33] : ""}
-          </div>
-        )}
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox35 && !isAcceptedBox35
-                  ? "grey"
-                  : isAcceptedBox35
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box35"
-          >
-            {isOpenBox35 ? mainArray[34] : ""}
-          </div>
-        )}
-        {By6 && (
-          <div
-            style={{
-              backgroundColor:
-                isOpenBox36 && !isAcceptedBox36
-                  ? "grey"
-                  : isAcceptedBox36
-                  ? "green"
-                  : "red",
-            }}
-            onClick={(e) => {
-              PlayGame(e);
-            }}
-            className="gridContainerItems"
-            id="4By4Box36"
-          >
-            {isOpenBox36 ? mainArray[35] : ""}
-          </div>
-        )}
       </div>
       <section id="endGameBtnDiv">
-        <button id="endGameBtn" className="hoverable" onClick={()=>{
-          let score = calculateScore();
-          gameEnded(secondTimeLeft, score);
-          clearInterval(myinterval)
-          setTimeout(() => {
+        <button
+          id="endGameBtn"
+          className="hoverable"
+          onClick={() => {
+            let score = calculateScore();
+            gameEnded(secondTimeLeft, score);
+            clearInterval(myinterval);
             navigate("/result");
-          }, 1500);
-        }}>Forfeit </button>
+          }}
+        >
+          Forfeit{" "}
+        </button>
       </section>
     </div>
   );

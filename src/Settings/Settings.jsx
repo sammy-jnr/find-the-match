@@ -6,7 +6,7 @@ import { GeneralContext } from "../context/MainContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Settings() {
-  const { setmenuOpen, currectGameInfo, setCurrectGameInfo } =
+  const { setmenuOpen, currectGameInfo, setCurrectGameInfo, setplayerNames } =
     useContext(GeneralContext);
 
   const location = useLocation();
@@ -77,7 +77,10 @@ function Settings() {
       <section id="selectModeSection" className="settingsSections">
         <h3 id="selectModeTitle">Mode</h3>
         <div id="selectModeInner">
-          <div className="selectModeItemsDiv hoverable" onClick={() => numbersMode()}>
+          <div
+            className="selectModeItemsDiv hoverable"
+            onClick={() => numbersMode()}
+          >
             <div className="selectModeItemsImgDiv">
               <div className="selectModeItemsSelectOuter">
                 {currectGameInfo.mode === "numbers" && (
@@ -87,7 +90,10 @@ function Settings() {
             </div>
             <div className="selectModeItemsTextDiv">Numbers</div>
           </div>
-          <div className="selectModeItemsDiv hoverable" onClick={() => lettersMode()}>
+          <div
+            className="selectModeItemsDiv hoverable"
+            onClick={() => lettersMode()}
+          >
             <div className="selectModeItemsImgDiv">
               <div className="selectModeItemsSelectOuter">
                 {currectGameInfo.mode === "letters" && (
@@ -174,6 +180,50 @@ function Settings() {
           </div>
         </div>
       </section>
+      {currectGameInfo.numberOfPlayers > 1 && (
+        <section className="playersInfoSection">
+          <input
+            onChange={(e) =>
+              setplayerNames((prev) => ({ ...prev, player1: e.target.value }))
+            }
+            type="text"
+            className="playersInfoSectionItems"
+            placeholder="player1 - Enter name"
+            maxLength={10}
+          />
+          <input
+            onChange={(e) =>
+              setplayerNames((prev) => ({ ...prev, player2: e.target.value }))
+            }
+            type="text"
+            className="playersInfoSectionItems"
+            placeholder="player2 - Enter name"
+            maxLength={10}
+          />
+          {currectGameInfo.numberOfPlayers > 2 && (
+            <input
+              onChange={(e) =>
+                setplayerNames((prev) => ({ ...prev, player3: e.target.value }))
+              }
+              type="text"
+              className="playersInfoSectionItems"
+              placeholder="player3 - Enter name"
+              maxLength={10}
+            />
+          )}
+          {currectGameInfo.numberOfPlayers > 3 && (
+            <input
+              onChange={(e) =>
+                setplayerNames((prev) => ({ ...prev, player4: e.target.value }))
+              }
+              type="text"
+              className="playersInfoSectionItems"
+              placeholder="player4 - Enter name"
+              maxLength={10}
+            />
+          )}
+        </section>
+      )}
       <section id="gridSizeSection" className="settingsSections">
         <h3 id="grigSizeTitle">Grid size</h3>
         <div id="gridSizeInner">
@@ -218,7 +268,9 @@ function Settings() {
       <section id="startGameSection">
         <Link to={"/startgame"}>
           {" "}
-          <button id="startGameButton" className="hoverable">START GAME</button>
+          <button id="startGameButton" className="hoverable">
+            START GAME
+          </button>
         </Link>
       </section>
     </div>

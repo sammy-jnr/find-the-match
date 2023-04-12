@@ -40,6 +40,13 @@ export function GeneralProvider({children}){
         },
     ])
 
+    const [playerNames, setplayerNames] = useState({
+        player1: "player1",
+        player2: "player2",
+        player3: "player3",
+        player4: "player4"
+    });
+
     let [singlePlayerScore, setsinglePlayerScore] = useState(0)
 
     let [numberOfAttempts, setnumberOfAttempts] = useState(0)
@@ -47,7 +54,23 @@ export function GeneralProvider({children}){
 
 
     return(
-        <GeneralContext.Provider value={{setmenuOpen,menuOpen,setCurrectGameInfo,currectGameInfo,finalArray,setfinalArray,playersScores,setplayersScores,numberOfAttempts,setnumberOfAttempts,timeSpent,settimeSpent,singlePlayerScore,setsinglePlayerScore}}>
+        <GeneralContext.Provider value={{
+            setmenuOpen,
+            menuOpen,
+            setCurrectGameInfo,
+            currectGameInfo,
+            finalArray,
+            setfinalArray,
+            playersScores,
+            setplayersScores,
+            numberOfAttempts,
+            setnumberOfAttempts,
+            timeSpent,settimeSpent,
+            singlePlayerScore,
+            setsinglePlayerScore,
+            setplayerNames,
+            playerNames
+            }}>
             {children}
         </GeneralContext.Provider>
     )

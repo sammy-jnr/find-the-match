@@ -50,7 +50,7 @@ function Navigation() {
                 <img src={closeIcon} alt="" className="basicIcons hoverable" id='closeIcon' onClick={()=>setmenuOpen(false)}/>
             </div>
         }
-        {!isLoggedIn && <img src={closeIcon} alt="" className="basicIcons" id='closeIcon2' onClick={()=>setmenuOpen(false)}/>}
+        {!isLoggedIn && <img src={closeIcon} alt="" className="basicIcons hoverable" id='closeIcon2' onClick={()=>setmenuOpen(false)}/>}
         <div id='navItemsContainer' style={{paddingTop: isLoggedIn ? "40px" : "80px"}}>
             <Link to="/" className='links'><div className='navItems'> <div className='navThumbnailDiv'><img src={homeIcon} alt='' style={{position: "relative", left: "-3px"}} className="bigIcons"/> </div> <p>Home</p> </div></Link>
             <Link to="/settings" className='links'><div className='navItems'> <div className='navThumbnailDiv'><img src={settingsIcon} alt='' style={{width: "20px",position: "relative", left: "-1px"}} className="bigIcons"/> </div> <p>Settings</p> </div></Link>

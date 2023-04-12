@@ -189,7 +189,7 @@ function ProfilePage() {
           <div className="last5GamesText">
             Games Hisory
             <div
-              id="dislayAmountToggle"
+              id="displayAmountToggle"
               onClick={() => {
                 setusingFirstFive6By6((prev) => !prev);
                 setfinal6By6();
@@ -301,7 +301,7 @@ function ProfilePage() {
           <div className="profileInfoDetailsInner">{TotalGamesLost}</div>
         </div>
       </section>
-      <section>
+      <section className="mainInfoSection">
         <div id="profileSelectMode">
           <div
             style={fourByFour ? SelectedA : NotSelectedA}

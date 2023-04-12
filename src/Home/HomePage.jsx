@@ -18,7 +18,7 @@ function HomePage() {
   return (
     <div id='homepageContainer'>
       <section id='homeHeader'>
-        <p id='homeHeaderText'>Matchup</p>
+        <p id='homeHeaderText'>Matched</p>
         <img src={menuIcon} alt='' className='hoverable' onClick={()=>setmenuOpen(true)}/>
       </section>
       <section id='homePageContent'>

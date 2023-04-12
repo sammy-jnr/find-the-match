@@ -6,7 +6,6 @@ import { GeneralContext } from "../context/MainContext";
 import { useEffect } from "react";
 import { auth } from "../Firebase/FirebaseHosting";
 
-
 function Result() {
   const navigate = useNavigate();
 
@@ -17,6 +16,7 @@ function Result() {
     numberOfAttempts,
     timeSpent,
     singlePlayerScore,
+    playerNames,
   } = useContext(GeneralContext);
 
   let playersMode;
@@ -24,28 +24,12 @@ function Result() {
     playersMode = "singleplayer";
   }
 
+  console.log(currectGameInfo.numberOfPlayers);
   console.log(playersScores);
   let player1Score = playersScores[0].score;
   let player2Score = playersScores[1].score;
   let player3Score = playersScores[2].score;
   let player4Score = playersScores[3].score;
-
-  let winner = [];
-  useEffect(() => {
-    let winnerScore = Math.max(
-      player1Score,
-      player2Score,
-      player3Score,
-      player4Score
-    );
-    playersScores.forEach((element) => {
-      if ((winnerScore = element.score)) {
-        winner.push(element.name);
-      }
-    });
-  });
-
-  useEffect(() => {}, []);
 
   let seconds = Math.floor(timeSpent % 60);
   let minutes = Math.floor((timeSpent / 60) % 60);
@@ -78,17 +62,17 @@ function Result() {
         )}
         {playersMode !== "singleplayer" && (
           <section id="scoreArea2">
-            <div id="winnerDisplayDiv">
-              <div id="winnerText">Winner</div>
-              <div id="winner">{winner.toString()}</div>
-            </div>
             <div className="scoreArea2Items">
-              <div className="scoreArea2ItemsName">Player1</div>
+              <div className="scoreArea2ItemsName">
+                {playerNames["player1"] ?? "Player1"}
+              </div>
               <div className="scoreArea2ItemsScore">Score: {player1Score}</div>
             </div>
-            {currectGameInfo.numberOfPlayers > 2 && (
+            {currectGameInfo.numberOfPlayers > 1 && (
               <div className="scoreArea2Items">
-                <div className="scoreArea2ItemsName">Player2</div>
+                <div className="scoreArea2ItemsName">
+                  {playerNames["player2"] ?? "Player2"}
+                </div>
                 <div className="scoreArea2ItemsScore">
                   Score: {player2Score}
                 </div>
@@ -96,7 +80,9 @@ function Result() {
             )}
             {currectGameInfo.numberOfPlayers > 2 && (
               <div className="scoreArea2Items">
-                <div className="scoreArea2ItemsName">Player3</div>
+                <div className="scoreArea2ItemsName">
+                  {playerNames["player3"] ?? "Player3"}
+                </div>
                 <div className="scoreArea2ItemsScore">
                   Score: {player3Score}
                 </div>
@@ -104,7 +90,9 @@ function Result() {
             )}
             {currectGameInfo.numberOfPlayers > 3 && (
               <div className="scoreArea2Items">
-                <div className="scoreArea2ItemsName">Player4</div>
+                <div className="scoreArea2ItemsName">
+                  {playerNames["player4"] ?? "Player4"}
+                </div>
                 <div className="scoreArea2ItemsScore">
                   Score: {player4Score}
                 </div>
@@ -121,18 +109,25 @@ function Result() {
       >
         New Game
       </button>
-      {!auth.currentUser &&
+      {!auth.currentUser && (
         <div>
-        <section id="signInText">
-          <div>
-            <Link to="/signin" className="links3"> Sign In </Link> to save your score
-          </div>
-        </section>
-        <section id="leaderBoardText">
-          Check the <Link to="" className="links3">Leaderboards</Link>{" "}
-        </section>
-      </div>}
-      
+          <section id="signInText">
+            <div>
+              <Link to="/signin" className="links3">
+                {" "}
+                Sign In{" "}
+              </Link>{" "}
+              to save your score
+            </div>
+          </section>
+          <section id="leaderBoardText">
+            Check the{" "}
+            <Link to="" className="links3">
+              Leaderboards
+            </Link>{" "}
+          </section>
+        </div>
+      )}
     </div>
   );
 }

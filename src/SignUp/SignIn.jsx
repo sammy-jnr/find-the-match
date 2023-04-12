@@ -3,9 +3,9 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Sign.css";
 import { AuthContext } from "../context/AuthenticationContext";
 import { GeneralContext } from "../context/MainContext";
-import menuIcon from "../Assets/icons/menuIcon.svg";
-import showPasswordIcon from "./Icons/showPassword.svg"
-import hidePasswordIcon from "./Icons/hidePassword.svg"
+import menuIconBlack from "../Assets/icons/menuIconBlack.svg";
+import showPasswordIcon from "./Icons/showPassword.svg";
+import hidePasswordIcon from "./Icons/hidePassword.svg";
 
 function SignIn() {
   const { signInExistingUser, changePage, setchangePage } =
@@ -24,6 +24,8 @@ function SignIn() {
 
   let [emailNotFound, setemailNotFound] = useState(false);
   let [IncorrectPassword, setIncorrectPassword] = useState(false);
+
+  const [isLoading, setisLoading] = useState(false);
 
   const signInUsers = async (e) => {
     e.preventDefault();
@@ -46,63 +48,88 @@ function SignIn() {
     }
   };
 
-  let [showPassword, setshowPassword] = useState(false)
+  let [showPassword, setshowPassword] = useState(false);
 
   return (
     <div id="signInContainer">
-      <section id="signupMenu">
-        <img
-          src={menuIcon}
-          alt=""
-          id="signupMenuIcon"
-          onClick={() => setmenuOpen(true)}
-        />
-      </section>
-      <section id="signinText">Sign In</section>
-      <form action="submit" id="signinForm" onSubmit={(e) => signInUsers(e)}>
-        <label htmlFor="emailInput" className="formItems">
-          <div className="signinMiniText">Email</div>
-          <input
-            type="email"
-            name="emailInput"
-            id="emailInputsignIn"
-            onChange={(e) => setEmail(e.target.value)}
+      <div className="signContainerInner">
+        <section id="signupMenu">
+          <img
+            src={menuIconBlack}
+            alt=""
+            id="signupMenuIcon"
+            onClick={() => setmenuOpen(true)}
           />
-          {emailNotFound && <div className="errorTexts">Email not found</div>}
-        </label>
-        <label htmlFor="passwordInput" className="formItems">
-          <div className="signinMiniText">Password</div>
-          <div className="inputContainer">
+        </section>
+        <section id="signinText">Login</section>
+        <form action="submit" id="signinForm" onSubmit={(e) => signInUsers(e)}>
+          <label htmlFor="emailInput" className="formItems">
+            <div className="signinMiniText">Email</div>
             <input
-              type={showPassword ? "text" : "password"}
-              name="passwordInput"
-              id="passwordInputsignIn"
-              onChange={(e) => setPassword(e.target.value)}
+              type="email"
+              name="emailInput"
+              id="emailInputsignIn"
+              onChange={(e) => setEmail(e.target.value)}
             />
-            {!showPassword && <img src={showPasswordIcon} alt="" className="EYEImage" onClick={() => setshowPassword(prev => !prev)}/>}
-            {showPassword && <img src={hidePasswordIcon} alt="" className="EYEImage" onClick={() => setshowPassword(prev => !prev)}/>}
-          </div>
-          
-          {IncorrectPassword && (
-            <div className="errorTexts">Incorrect password</div>
-          )}
-        </label>
-        <div id="submitDivSignin">
-          <button id="signinSubmitButton">Sign in</button>
-        </div>
-      </form>
+            {emailNotFound && <div className="errorTexts">Email not found</div>}
+          </label>
+          <label htmlFor="passwordInput" className="formItems">
+            <div className="signinMiniText">Password</div>
+            <div className="inputContainer">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="passwordInput"
+                id="passwordInputsignIn"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              {!showPassword && (
+                <img
+                  src={showPasswordIcon}
+                  alt=""
+                  className="EYEImage"
+                  onClick={() => setshowPassword((prev) => !prev)}
+                />
+              )}
+              {showPassword && (
+                <img
+                  src={hidePasswordIcon}
+                  alt=""
+                  className="EYEImage"
+                  onClick={() => setshowPassword((prev) => !prev)}
+                />
+              )}
+            </div>
 
-      <section id="signinExtras">
-        <div id="refForgotPasssword">
-          <Link to="/resetpassword" style={{ margin: 0 }} className="links2">
-            Forgot password?
+            {IncorrectPassword && (
+              <div className="errorTexts">Incorrect password</div>
+            )}
+          </label>
+          <div id="submitDivSignin">
+            <button
+              id="signinSubmitButton"
+              style={isLoading ? { backgroundColor: "#444444" } : {}}
+            >
+              {isLoading ? (
+                <span className="generalLoadingIcon"></span>
+              ) : (
+                "Login"
+              )}{" "}
+            </button>
+          </div>
+        </form>
+
+        <section id="signinExtras">
+          <div id="refForgotPasssword">
+            <Link to="/resetpassword" style={{ margin: 0 }} className="links2">
+              Forgot password?
+            </Link>
+          </div>
+          Don't have an account?
+          <Link to="/signup" className="links2">
+            Register
           </Link>
-        </div>
-        Don't have an account?
-        <Link to="/signup" className="links2">
-          Sign up
-        </Link>
-      </section>
+        </section>
+      </div>
     </div>
   );
 }

@@ -65,6 +65,10 @@
     font-weight: 700;
     margin-left: 20px;
 }
+.mainInfoSection{
+    max-width: 1200px;
+    margin: 0 auto;
+}
 #profileSelectMode{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -154,9 +158,10 @@
     height: 40px;
 }
 .selectedSectionInfo{
-    margin: 30px 0;
+    margin: 30px auto;
     color: #b3b3b3;
     font-size: 17px;
+    max-width: 600px;
 }
 .selectedSectionInfoItems{
     display: grid;

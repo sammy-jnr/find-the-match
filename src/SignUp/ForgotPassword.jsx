@@ -1,28 +1,46 @@
-import React, { useContext, useEffect} from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import {GeneralContext} from "../context/MainContext"
-import menuIcon from "../Assets/icons/menuIcon.svg"
-import "./Sign.css"
+import React, { useContext, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { GeneralContext } from "../context/MainContext";
+import arrowBack from "../Assets/icons/arrowBack.svg";
+import "./Sign.css";
 
 function ForgotPassword() {
-
   const location = useLocation();
-    const{ setmenuOpen } = useContext(GeneralContext)
-    useEffect(() => {
-      setmenuOpen(false)
-    }, [location]);
+
+  const navigate = useNavigate();
+
+  const { setmenuOpen } = useContext(GeneralContext);
+  useEffect(() => {
+    setmenuOpen(false);
+  }, [location]);
 
   return (
-    <div id='forgotPasswordContainer'>
-        <section id='signupMenu'><img src={menuIcon} alt="" id='signupMenuIcon' onClick={()=>setmenuOpen(true)} /></section>
-        <div id='signinText' >Reset Password</div>
-        <label htmlFor="emailInput" id='forgotPasswordDiv'>
+    <div id="forgotPasswordContainer">
+      <img
+        src={arrowBack}
+        alt=""
+        className="resetPasswordBack"
+        onClick={() => navigate(-1)}
+      />
+      <div className="signContainerInner">
+        <div id="signinText">Reset Password</div>
+        <div id="forgotPasswordDiv">
+          <label htmlFor="emailInput">
             <div id="forgotPasswordMiniText">Email</div>
-            <input type="email" name='emailInput' id='emailInputForgotPassword'/>
-        </label>
-        <div id='submitDivForgotPassword'><button id='ForgotPasswordSubmitButton'>Submit</button></div>
+            <input
+              type="email"
+              name="emailInput"
+              id="emailInputForgotPassword"
+            />
+          </label>
+        </div>
+
+        <div id="submitDivForgotPassword">
+          <button id="ForgotPasswordSubmitButton">Submit</button>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
 
-export default ForgotPassword
+export default ForgotPassword;
