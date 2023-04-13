@@ -1,9 +1,10 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-#SettingsContainer{
+
+#SettingsContainer {
     height: 100vh;
     background-color: #042c2e;
     color: #fffdf0;
@@ -11,17 +12,20 @@
     display: flex;
     flex-direction: column;
 }
-#settingsHeader{
+
+#settingsHeader {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 30px 15px;
     font-size: 20px;
 }
-#skipSettingsSection{
+
+#skipSettingsSection {
     display: flex;
 }
-#skipSettingsSectionDiv{
+
+#skipSettingsSectionDiv {
     display: flex;
     align-items: center;
     margin-left: auto;
@@ -35,14 +39,17 @@
     font-weight: 600;
     letter-spacing: 1.4px;
 }
-#skipIcon{
+
+#skipIcon {
     margin: 0 6px;
 }
-#selectModeTitle{
+
+#selectModeTitle {
     padding: 20px;
     margin-top: 30px;
 }
-.selectModeItemsDiv{
+
+.selectModeItemsDiv {
     height: 50px;
     background-color: #fffdf0;
     padding: 0 10px;
@@ -54,7 +61,8 @@
     border-radius: 4px;
     font-weight: 600;
 }
-.selectModeItemsImgDiv{
+
+.selectModeItemsImgDiv {
     width: 30px;
     height: 100%;
     display: flex;
@@ -62,7 +70,8 @@
     justify-content: center;
     margin-right: 30px;
 }
-.selectModeItemsSelectOuter{
+
+.selectModeItemsSelectOuter {
     border: 2px solid;
     width: 21px;
     height: 21px;
@@ -71,18 +80,20 @@
     align-items: center;
     justify-content: center;
 }
-.selectModeItemsSelectInner{
+
+.selectModeItemsSelectInner {
     width: 11px;
     height: 11px;
     background-color: black;
     border-radius: 50%;
 }
 
-#selectNumberOfPlayersTitle{
+#selectNumberOfPlayersTitle {
     padding: 20px;
     margin-top: 30px;
 }
-#numberOfPlayersInner{
+
+#numberOfPlayersInner {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -90,7 +101,8 @@
     padding: 0 15px;
     font-weight: 600;
 }
-.numberOfPlayersItems{
+
+.numberOfPlayersItems {
     width: 100%;
     background-color: #fffdf0;
     color: #032327;
@@ -99,14 +111,16 @@
     align-items: center;
     border-radius: 3px;
 }
-.numberOfPlayersImgDiv{
+
+.numberOfPlayersImgDiv {
     width: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-right: 10px;
 }
-.numberOfPlayersSelectOuter{
+
+.numberOfPlayersSelectOuter {
     border: 2px solid;
     width: 21px;
     height: 21px;
@@ -115,13 +129,15 @@
     align-items: center;
     justify-content: center;
 }
-.numberOfPlayersSelectInner{
+
+.numberOfPlayersSelectInner {
     width: 11px;
     height: 11px;
     background-color: black;
     border-radius: 50%;
 }
-.playersInfoSection{
+
+.playersInfoSection {
     margin: 15px auto;
     display: flex;
     flex-direction: column;
@@ -129,9 +145,10 @@
     padding: 0 15px;
     width: 100%;
     max-width: 1000px;
-    
+
 }
-.playersInfoSectionItems{
+
+.playersInfoSectionItems {
     padding: 5px 10px;
     margin-bottom: 3px;
     font-size: 16px;
@@ -140,16 +157,19 @@
     height: 40px;
     background-color: #fffdf0;
 }
-#grigSizeTitle{
+
+#grigSizeTitle {
     margin-top: 30px;
     padding: 20px;
 }
-#gridSizeInner{
+
+#gridSizeInner {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
-.gridSizeItems{
+
+.gridSizeItems {
     display: flex;
     justify-content: center;
     background-color: #fffce7;
@@ -159,23 +179,33 @@
     border-radius: 3px;
     font-weight: 600;
 }
-#startGameSection{
+
+#startGameSection {
     margin: 80px 0;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-#startGameButton{
+
+#startGameButton {
     padding: 15px 50px;
     border-radius: 10px;
     font-size: 17px;
     font-weight: 600;
     border: none;
+    position: relative;
 }
-#startGameButton:hover{
-    border: 3px solid grey;
+
+#startGameButton:hover {
+    box-shadow: inset 1px 1px rgb(108, 108, 108),
+        inset 2px 2px rgb(136, 136, 136),
+        inset 3px 3px rgb(153, 153, 153),
+        inset 4px 4px rgb(191, 191, 191),
+        inset 5px 5px rgb(211, 210, 210);
+    top: 2px;
 }
-.settingsSections{
+
+.settingsSections {
     width: 100%;
     max-width: 1000px;
     margin: auto;

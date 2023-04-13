@@ -1,11 +1,11 @@
 import { createContext, useState, useEffect } from "react";
-import { createUserWithEmailAndPassword,
-         signInWithEmailAndPassword,
-         onAuthStateChanged,
-         updateProfile,
-         signOut,
-        }
-        from "firebase/auth"
+import { 
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    updateProfile,
+    signOut,
+}from "firebase/auth"
 import { auth } from "../Firebase/FirebaseHosting";
 import { db } from "../Firebase/FirebaseHosting";
 import { setDoc, doc, updateDoc, arrayUnion, getDoc, increment } from "firebase/firestore"
@@ -13,10 +13,8 @@ import { setDoc, doc, updateDoc, arrayUnion, getDoc, increment } from "firebase/
 export const AuthContext = createContext()
 
 
-
 export function AuthProvider({children}) {
 
-    
     let [displayName, setDisplayName] = useState()
 
     let userAvatar = "avatar4"
@@ -65,12 +63,10 @@ export function AuthProvider({children}) {
                 setIsLoggedIn(true)
                 setIsLoading(false);
             } else {
-                console.log("something went wrong")
+                // console.log("something went wrong")
             }
         })
     }
-
-
 
     async function signInExistingUser(email, password) {
         setIsLoading(true);
@@ -102,7 +98,6 @@ export function AuthProvider({children}) {
 
     const logOut = () => {
         signOut(auth).then(() => {
-            console.log("logOut")
             setIsLoggedIn(false);
         })
         .catch(err => console.log(err));
@@ -110,10 +105,6 @@ export function AuthProvider({children}) {
     // uploading info
 
     
-
-    
-    
-
     const addUserToDatabase = async() => {
         await setDoc(doc(db, "users", `${userUid}`), {
             TotalGamesPlayed: 0,
@@ -137,7 +128,6 @@ export function AuthProvider({children}) {
                     FastestTime: 0,
                     TotalGames: 0
                 })
-                console.log("done")
             } catch (error) {
                 console.log(error.message)
             }
@@ -152,7 +142,6 @@ export function AuthProvider({children}) {
         }
         return newArr;
     }
-
 
     let [TotalGamesPlayed4by4, setTotalGamesPlayed4by4] = useState(0)
     let [AverageTime4by4, setAverageTime4by4] = useState(0)
@@ -169,21 +158,6 @@ export function AuthProvider({children}) {
     let [ScoresArray6by6, setScoresArray6by6] = useState(0)
     let [GamesArray6by6, setGamesArray6by6] = useState([])
     let [FastestTime6by6, setFastestTime6by6] = useState(0)
-
-
-  
-
-
-
-
-
-
-
-
-    
-
-
-
 
 
     let userScore;
@@ -213,8 +187,6 @@ export function AuthProvider({children}) {
         onGameEnd()
     }
 
-
-    
     const onGameEnd = async() => {
         if(!user)return;
         if (auth.currentUser){
@@ -245,7 +217,6 @@ export function AuthProvider({children}) {
                 .then(async()=>{
                     await getDoc(doc(db, `users/${userUid}`))
                     .then((response)=>{
-                        console.log(response.data())
                         tempTotalGamesPlayed = response.data().TotalGamesPlayed
                     })
                 })
@@ -253,7 +224,6 @@ export function AuthProvider({children}) {
                     await getDoc(doc(db, `users/${userUid}/scores`, "4by4"))
                     .then((response)=>{
                         const returnedData = response.data()
-                        console.log(returnedData);
                         tempaverageTime = returnedData.AverageTime
                         tempaverageScore = returnedData.AverageScore
                         temphighestScore = returnedData.HighestScore
@@ -303,7 +273,6 @@ export function AuthProvider({children}) {
                             TotalGamesLost: increment(1)
                         }
                     )}
-                    console.log("done")
                 }).catch((err) => console.log(err.message))
                 .then(async()=>{
                     await updateDoc(doc(db, `users/${userUid}/scores`, "4by4"),{
@@ -383,7 +352,6 @@ export function AuthProvider({children}) {
                             TotalGamesLost: increment(1)
                         }
                     )}
-                    console.log("done")
                 }).catch((err) => console.log(err.message))
                 .then(async()=>{
                     await updateDoc(doc(db, `users/${userUid}/scores`, "6by6"),{
@@ -398,28 +366,40 @@ export function AuthProvider({children}) {
             await updateLeaderBoards()
              //updating docs after every game
              getDoc(doc(db, `users/${userUid}/scores`, "4by4"))
-             .then((response) => {
-                 console.log(response.data());
-                 let userBasicInfoResult = response.data();
-                 setAverageTime4by4(()=>{
-                     let seconds = Math.floor( (userBasicInfoResult.AverageTime) % 60 );
-                     let minutes = Math.floor( (userBasicInfoResult.AverageTime/60) % 60 )  
-                     let displayTime
-                     if(seconds < 10){
-                         displayTime = `${minutes}:0${seconds}`
-                     }else{
-                         displayTime = `${minutes}:${seconds}`
-                     } 
-                     return displayTime     
-
-                 })
-                 setAverageScore4by4(Math.floor(userBasicInfoResult.AverageScore))
-                 setHighestScore4by4(userBasicInfoResult.HighestScore)
-                 setScoresArray4by4(userBasicInfoResult.scoreInfo)
-                 setTotalGamesPlayed4by4(userBasicInfoResult.TotalGames)
-                 setFastestTime4by4(()=>{
-                    let seconds = Math.floor( (userBasicInfoResult.FastestTime) % 60 );
-                    let minutes = Math.floor( (userBasicInfoResult.FastestTime/60) % 60 )  
+            .then((response) => {
+                let userBasicInfoResult = response.data();
+                setAverageTime4by4(()=>{
+                    let seconds = Math.floor( (userBasicInfoResult.AverageTime) % 60 );
+                    let minutes = Math.floor( (userBasicInfoResult.AverageTime/60) % 60 )  
+                    let displayTime
+                    if(seconds < 10){
+                        displayTime = `${minutes}:0${seconds}`
+                    }else{
+                        displayTime = `${minutes}:${seconds}`
+                    } 
+                    return displayTime                         })
+                setAverageScore4by4(Math.floor(userBasicInfoResult.AverageScore))
+                setHighestScore4by4(userBasicInfoResult.HighestScore)
+                setScoresArray4by4(userBasicInfoResult.scoreInfo)
+                setTotalGamesPlayed4by4(userBasicInfoResult.TotalGames)
+                setFastestTime4by4(()=>{
+                   let seconds = Math.floor( (userBasicInfoResult.FastestTime) % 60 );
+                   let minutes = Math.floor( (userBasicInfoResult.FastestTime/60) % 60 )  
+                   let displayTime
+                   if(seconds < 10){
+                       displayTime = `${minutes}:0${seconds}`
+                   }else{
+                       displayTime = `${minutes}:${seconds}`
+                   } 
+                   return displayTime                     })
+               setGamesArray4by4(reverseArr(userBasicInfoResult.scoreInfo))
+            })
+            getDoc(doc(db, `users/${userUid}/scores`, "6by6"))
+            .then((response) => {
+                let userBasicInfoResult = response.data();
+                setAverageTime6by6(()=>{
+                    let seconds = Math.floor( (userBasicInfoResult.AverageTime) % 60 );
+                    let minutes = Math.floor( (userBasicInfoResult.AverageTime/60) % 60 )  
                     let displayTime
                     if(seconds < 10){
                         displayTime = `${minutes}:0${seconds}`
@@ -427,52 +407,31 @@ export function AuthProvider({children}) {
                         displayTime = `${minutes}:${seconds}`
                     } 
                     return displayTime     
-
                 })
-                setGamesArray4by4(reverseArr(userBasicInfoResult.scoreInfo))
-             })
-             getDoc(doc(db, `users/${userUid}/scores`, "6by6"))
-             .then((response) => {
-                 console.log(response.data());
-                 let userBasicInfoResult = response.data();
-                 setAverageTime6by6(()=>{
-                     let seconds = Math.floor( (userBasicInfoResult.AverageTime) % 60 );
-                     let minutes = Math.floor( (userBasicInfoResult.AverageTime/60) % 60 )  
-                     let displayTime
-                     if(seconds < 10){
-                         displayTime = `${minutes}:0${seconds}`
-                     }else{
-                         displayTime = `${minutes}:${seconds}`
-                     } 
-                     return displayTime     
-
-                 })
-                 setAverageScore6by6(Math.floor(userBasicInfoResult.AverageScore))
-                 setHighestScore6by6(userBasicInfoResult.HighestScore)
-                 setScoresArray6by6(userBasicInfoResult.scoreInfo)
-                 setFastestTime6by6(()=>{
-                    let seconds = Math.floor( (userBasicInfoResult.FastestTime) % 60 );
-                    let minutes = Math.floor( (userBasicInfoResult.FastestTime/60) % 60 )  
-                    let displayTime
-                    if(seconds < 10){
-                        displayTime = `${minutes}:0${seconds}`
-                    }else{
-                        displayTime = `${minutes}:${seconds}`
-                    } 
-                    return displayTime     
-
-                })
-                 setTotalGamesPlayed6by6(userBasicInfoResult.TotalGames);
-                 setGamesArray6by6(reverseArr(userBasicInfoResult.scoreInfo))
-
-             })
-             getDoc(doc(db, "users", `${userUid}`))
-             .then((response) => {
-                 let userBasicInfoResult = response.data();
-                 setTotalGamesPlayed(userBasicInfoResult.TotalGamesPlayed)
-                 setTotalGamesWon(userBasicInfoResult.TotalGamesWon)
-                 setTotalGamesLost(userBasicInfoResult.TotalGamesLost)
-             })                
+                setAverageScore6by6(Math.floor(userBasicInfoResult.AverageScore))
+                setHighestScore6by6(userBasicInfoResult.HighestScore)
+                setScoresArray6by6(userBasicInfoResult.scoreInfo)
+                setFastestTime6by6(()=>{
+                   let seconds = Math.floor( (userBasicInfoResult.FastestTime) % 60 );
+                   let minutes = Math.floor( (userBasicInfoResult.FastestTime/60) % 60 )  
+                   let displayTime
+                   if(seconds < 10){
+                       displayTime = `${minutes}:0${seconds}`
+                   }else{
+                       displayTime = `${minutes}:${seconds}`
+                   } 
+                   return displayTime     
+               })
+                setTotalGamesPlayed6by6(userBasicInfoResult.TotalGames);
+                setGamesArray6by6(reverseArr(userBasicInfoResult.scoreInfo))
+            })
+            getDoc(doc(db, "users", `${userUid}`))
+            .then((response) => {
+                let userBasicInfoResult = response.data();
+                setTotalGamesPlayed(userBasicInfoResult.TotalGamesPlayed)
+                setTotalGamesWon(userBasicInfoResult.TotalGamesWon)
+                setTotalGamesLost(userBasicInfoResult.TotalGamesLost)
+            })                
         }else{
             console.log("user not signed in")
         }
@@ -642,9 +601,7 @@ async function updateLeaderBoards(){
                     setTotalGamesPlayed(userBasicInfoResult.TotalGamesPlayed)
                     setTotalGamesWon(userBasicInfoResult.TotalGamesWon)
                     setTotalGamesLost(userBasicInfoResult.TotalGamesLost)
-                })     
-                
-                      
+                })                           
             }
         })
     },[user])
@@ -664,20 +621,43 @@ async function updateLeaderBoards(){
     },[])
 
     return(
-        <AuthContext.Provider value={{CreateNewUser, signInExistingUser, onAuthStateChanged,
-                                        setDisplayName,updatingUserProfile,username,
-                                        logOut,isLoggedIn,setIsLoggedIn,gameEnded,
-
-                                        setmodeIs4by4,setgameWon,
-
-
-                                        AverageTime4by4, AverageScore4by4, HighestScore4by4, ScoresArray4by4, AverageTime6by6, AverageScore6by6, HighestScore6by6, ScoresArray6by6,
-                                        TotalGamesPlayed, TotalGamesLost, TotalGamesWon,
-                                        FastestTime4by4, FastestTime6by6, TotalGamesPlayed4by4, TotalGamesPlayed6by6,GamesArray4by4,GamesArray6by6,
-
-                                        receiveUserAvatar,updatingUserAvatar,LeaderBoardArray4By4,LeaderBoardArray6By6,isLoading
-                                        
-                                        }}>
+        <AuthContext.Provider 
+            value={{
+                CreateNewUser, 
+                signInExistingUser, 
+                onAuthStateChanged,
+                setDisplayName,
+                updatingUserProfile,
+                username,
+                logOut,
+                isLoggedIn,
+                setIsLoggedIn,
+                gameEnded,
+                setmodeIs4by4,
+                setgameWon,
+                AverageTime4by4, 
+                AverageScore4by4, 
+                HighestScore4by4, 
+                ScoresArray4by4, 
+                AverageTime6by6, 
+                AverageScore6by6, 
+                HighestScore6by6, 
+                ScoresArray6by6,
+                TotalGamesPlayed, 
+                TotalGamesLost, 
+                TotalGamesWon,
+                FastestTime4by4, 
+                FastestTime6by6, 
+                TotalGamesPlayed4by4, 
+                TotalGamesPlayed6by6,
+                GamesArray4by4,
+                GamesArray6by6,
+                receiveUserAvatar,
+                updatingUserAvatar,
+                LeaderBoardArray4By4,
+                LeaderBoardArray6By6,
+                isLoading
+            }}>
             {children}
         </AuthContext.Provider>
     )

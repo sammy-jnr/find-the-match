@@ -3,7 +3,6 @@ import "./Play.css";
 import { Link, useNavigate } from "react-router-dom";
 import menuIcon from "../Assets/icons/menuIcon.svg";
 import { GeneralContext } from "../context/MainContext";
-import { useEffect } from "react";
 import { auth } from "../Firebase/FirebaseHosting";
 
 function Result() {
@@ -24,8 +23,6 @@ function Result() {
     playersMode = "singleplayer";
   }
 
-  console.log(currectGameInfo.numberOfPlayers);
-  console.log(playersScores);
   let player1Score = playersScores[0].score;
   let player2Score = playersScores[1].score;
   let player3Score = playersScores[2].score;
@@ -33,7 +30,6 @@ function Result() {
 
   let seconds = Math.floor(timeSpent % 60);
   let minutes = Math.floor((timeSpent / 60) % 60);
-  console.log(timeSpent);
   let displayTime;
   if (seconds < 10) {
     displayTime = `${minutes}:0${seconds}`;

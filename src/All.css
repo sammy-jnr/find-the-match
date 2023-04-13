@@ -16,6 +16,7 @@ button:hover {
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
     cursor: pointer;
 }
+
 .generalLoadingIcon {
     width: 20px;
     height: 20px;
@@ -25,25 +26,39 @@ button:hover {
     display: inline-block;
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
-  }
-  
-  @keyframes rotation {
+}
+
+@keyframes rotation {
     0% {
-      transform: rotate(0deg);
+        transform: rotate(0deg);
     }
-  
+
     100% {
-      transform: rotate(360deg);
+        transform: rotate(360deg);
     }
-  }
-/* .mainContainer{
-    height: auto;
-    width: 100vw;
-    min-height: 100vh;
-    background-color: #042c2e;
-    color: #fffdf0;
-    overflow: hidden;
-} */
+}
+
+.generalLoadingIconLarge {
+    width: 140px;
+    height: 140px;
+    border: 15px solid white;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 #navigationContainer {
     width: 100%;
     min-height: 100%;

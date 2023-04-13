@@ -267,7 +267,12 @@ function ProfilePage() {
             }}
           >
             {" "}
-            <img src={selectedAvatar} alt="" id="avatarImage" className="hoverable" />{" "}
+            <img
+              src={selectedAvatar}
+              alt=""
+              id="avatarImage"
+              className="hoverable"
+            />{" "}
           </div>
           <div id="profileName">{username}</div>
           <img
@@ -284,6 +289,7 @@ function ProfilePage() {
           src={menuIcon}
           alt=""
           id="menuIcon"
+          className="hoverable"
           onClick={() => setmenuOpen(true)}
         />
       </section>
@@ -337,6 +343,7 @@ function ProfilePage() {
               src={closeIcon}
               alt=""
               id="closeChangeName"
+              className="hoverable"
               onClick={() => {
                 seteditName(false);
               }}

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import "./Settings.css";
 import menuIcon from "../Assets/icons/menuIcon.svg";
 import skipIcon from "../Assets/icons/skipIcon.svg";
@@ -60,7 +60,12 @@ function Settings() {
     <div id="SettingsContainer">
       <section id="settingsHeader">
         <h2>Settings</h2>
-        <img src={menuIcon} alt="" onClick={() => setmenuOpen(true)} />
+        <img
+          src={menuIcon}
+          alt=""
+          className="hoverable"
+          onClick={() => setmenuOpen(true)}
+        />
       </section>
       <section id="skipSettingsSection">
         <div
@@ -103,16 +108,6 @@ function Settings() {
             </div>
             <div className="selectModeItemsTextDiv">Letters</div>
           </div>
-          {/* <div className="selectModeItemsDiv" onClick={() => imagesMode()}>
-            <div className="selectModeItemsImgDiv">
-              <div className="selectModeItemsSelectOuter">
-                {currectGameInfo.mode === "images" && (
-                  <div className="selectModeItemsSelectInner"></div>
-                )}
-              </div>
-            </div>
-            <div className="selectModeItemsTextDiv">Images</div>
-          </div> */}
         </div>
       </section>
       <section id="numberOfPlayersSection" className="settingsSections">

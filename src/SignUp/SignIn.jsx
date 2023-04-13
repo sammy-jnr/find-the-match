@@ -8,8 +8,7 @@ import showPasswordIcon from "./Icons/showPassword.svg";
 import hidePasswordIcon from "./Icons/hidePassword.svg";
 
 function SignIn() {
-  const { signInExistingUser, changePage, setchangePage } =
-    useContext(AuthContext);
+  const { signInExistingUser } = useContext(AuthContext);
 
   const location = useLocation();
   const { setmenuOpen } = useContext(GeneralContext);
@@ -29,17 +28,16 @@ function SignIn() {
 
   const signInUsers = async (e) => {
     e.preventDefault();
-
+    setisLoading(true);
     try {
       await signInExistingUser(email, password);
+      setisLoading(false);
     } catch (error) {
-      console.log(error);
+      setisLoading(false);
       if (error.message.substring(17) === "auth/user-not-found).") {
-        console.log("User not found");
         setemailNotFound(true);
       }
       if (error.message.substring(17) === "auth/wrong-password).") {
-        console.log("User not found");
         setIncorrectPassword(true);
       }
     }
@@ -57,6 +55,7 @@ function SignIn() {
           <img
             src={menuIconBlack}
             alt=""
+            className="hoverable"
             id="signupMenuIcon"
             onClick={() => setmenuOpen(true)}
           />

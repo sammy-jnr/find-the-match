@@ -203,7 +203,8 @@
     color: #242424;
     box-shadow: 0px 5px #5d5d5d;
 }
-#newGameBtn:hover{
+
+#newGameBtn:hover {
     background-color: #5d5d5d;
     color: white;
     top: 2px;
@@ -232,7 +233,8 @@
     text-align: center;
     font-size: 25px;
 }
-.scoreArea2ItemsName{
+
+.scoreArea2ItemsName {
     font-size: 14px;
 }
 

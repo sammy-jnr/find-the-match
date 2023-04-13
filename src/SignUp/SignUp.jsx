@@ -56,7 +56,6 @@ function SignUp() {
         setisLoading(false);
       });
     } catch (error) {
-      console.log(error);
       if (error.message.substring(17) === "auth/email-already-in-use).") {
         setisEmailInUse(true);
         setisLoading(false);
@@ -73,6 +72,7 @@ function SignUp() {
           <img
             src={menuIconBlack}
             alt=""
+            className="hoverable"
             id="signupMenuIcon"
             onClick={() => setmenuOpen(true)}
           />
@@ -191,8 +191,9 @@ function SignUp() {
             )}
           </label>
           <div id="submitDiv">
-            <button id="signupSubmitButton"
-              style={isLoading ? {backgroundColor: "#444444"}: {}}
+            <button
+              id="signupSubmitButton"
+              style={isLoading ? { backgroundColor: "#444444" } : {}}
             >
               {isLoading ? (
                 <span className="generalLoadingIcon"></span>

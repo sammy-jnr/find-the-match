@@ -1,9 +1,10 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-#homepageContainer{
+
+#homepageContainer {
     height: 100vh;
     width: 100vw;
     overflow: auto;
@@ -13,20 +14,24 @@
     display: flex;
     flex-direction: column;
 }
-#homeHeader{
+
+#homeHeader {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 20px;
 }
-#homeHeaderText{
+
+#homeHeaderText {
     font-size: 25px;
 }
-#homePageContent{
+
+#homePageContent {
     width: 100%;
     height: auto;
 }
-#homePageContentImageDiv{
+
+#homePageContentImageDiv {
     width: 100%;
     height: auto;
     /* background-color: aliceblue; */
@@ -34,19 +39,22 @@
     align-items: center;
     justify-content: center;
 }
-#homePageContentTextDiv{
+
+#homePageContentTextDiv {
     text-align: center;
     margin: 30px 0;
     font-size: 30px;
     padding: 10px;
 }
-#homePageStartButtonDiv{
+
+#homePageStartButtonDiv {
     width: 100%;
     display: flex;
     justify-content: center;
     margin: auto 0;
 }
-#homePageStartButton{
+
+#homePageStartButton {
     border: none;
     background-color: #001314;
     color: white;
@@ -56,32 +64,38 @@
     border-radius: 10px;
     margin-top: 30px;
 }
+
 #homePageStartButton:hover {
-   box-shadow: 2px 2px rgba(255, 255, 255, 0.613),
-                5px 5px rgba(211, 211, 211, 0.532)
+    box-shadow: 2px 2px rgba(255, 255, 255, 0.613),
+        5px 5px rgba(211, 211, 211, 0.532)
 }
-#homePageImg{
+
+#homePageImg {
     max-width: 1000px;
     width: 80%;
     border-radius: 30px;
 }
+
 @media screen and (max-width: 350px) {
-    #homePageContentTextDiv{
+    #homePageContentTextDiv {
         font-size: 20px;
     }
 }
+
 @media screen and (min-width: 480px) {
-    #homePageImg{
+    #homePageImg {
         max-width: 1000px;
         width: 60%;
         border-radius: 30px;
     }
 }
+
 @media screen and (min-width: 1080px) {
-    #homePageContent{
+    #homePageContent {
         display: flex;
     }
-    #homePageContentTextDiv{
+
+    #homePageContentTextDiv {
         width: 100%;
         font-size: 50px;
         display: flex;
@@ -89,17 +103,20 @@
         justify-content: center;
         padding: 30px;
     }
-    #homePageImg{
+
+    #homePageImg {
         width: 70%;
         transform: rotate(35deg);
         position: relative;
         top: 60px;
     }
-    #homePageStartButtonDiv{
+
+    #homePageStartButtonDiv {
         margin-top: auto;
         margin-bottom: 30px;
     }
-    #homePageStartButton{
+
+    #homePageStartButton {
         padding: 30px 150px;
         font-size: 22px;
     }

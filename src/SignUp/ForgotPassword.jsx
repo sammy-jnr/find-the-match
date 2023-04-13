@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { GeneralContext } from "../context/MainContext";
 import arrowBack from "../Assets/icons/arrowBack.svg";
 import "./Sign.css";
@@ -19,7 +19,7 @@ function ForgotPassword() {
       <img
         src={arrowBack}
         alt=""
-        className="resetPasswordBack"
+        className="resetPasswordBack hoverable"
         onClick={() => navigate(-1)}
       />
       <div className="signContainerInner">

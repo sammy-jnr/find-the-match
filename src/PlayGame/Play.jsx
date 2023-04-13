@@ -148,7 +148,6 @@ function Play() {
       setBy4(false);
       setBy6(true);
       setmodeIs4by4(false);
-      console.log("true");
     }
   }, []);
 
@@ -684,15 +683,15 @@ function Play() {
 
   function calculateScore() {
     //TODO console.log this out
-    if (By4 && AreadyOpenedArray.length < 8) {
-      setgameWon(false);
-    } else if (By4 && AreadyOpenedArray.length >= 8) {
-      setgameWon(true);
-    } else if (!By4 && AreadyOpenedArray.length < 16) {
-      setgameWon(false);
-    } else {
-      setgameWon(true);
-    }
+    // if (By4 && AreadyOpenedArray.length < 8) {
+    //   setgameWon(false);
+    // } else if (By4 && AreadyOpenedArray.length >= 8) {
+    //   setgameWon(true);
+    // } else if (!By4 && AreadyOpenedArray.length < 16) {
+    //   setgameWon(false);
+    // } else {
+    //   setgameWon(true);
+    // }
     // total time here represent the current time after total time has been decreased during the course of the game
     if (By4) {
       if (AreadyOpenedArray.length < 14) {
@@ -700,7 +699,7 @@ function Play() {
       }
       return Math.floor(
         100 -
-          (TotalTime / 50) * 70 -
+          ((50 - TotalTime) / 50) * 70 -
           ((numberOfMoves - 16) / (numberOfMoves + 1)) * 30
       );
     } else {
@@ -709,7 +708,7 @@ function Play() {
       }
       return Math.floor(
         100 -
-          (TotalTime / 300) * 70 -
+          ((300 - TotalTime) / 300) * 70 -
           ((numberOfMoves - 36) / (numberOfMoves + 1)) * 30
       );
     }
@@ -720,25 +719,24 @@ function Play() {
     if (AreadyOpenedArray.length > 13 && By4) {
       let score = calculateScore();
       setsinglePlayerScore(score);
-      gameEnded(secondTimeLeft, score);
       clearInterval(myinterval);
       navigate("/result");
+      currectGameInfo.numberOfPlayers === 1 && gameEnded(secondTimeLeft, score);
     }
     if (AreadyOpenedArray.length > 33 && By6) {
-      console.log("gameEnded");
       let score = calculateScore();
       setsinglePlayerScore(score);
-      gameEnded(secondTimeLeft, score);
       clearInterval(myinterval);
       navigate("/result");
+      currectGameInfo.numberOfPlayers === 1 && gameEnded(secondTimeLeft, score);
     }
     if (TotalTime <= 0 && !isgameEnded) {
       navigate("/result");
       clearInterval(myinterval);
       let score = calculateScore();
       setsinglePlayerScore(score);
-      gameEnded(secondTimeLeft, score);
       isgameEnded = true;
+      currectGameInfo.numberOfPlayers === 1 && gameEnded(secondTimeLeft, score);
     }
   }
 
@@ -837,7 +835,6 @@ function Play() {
             {Array(parseInt(playerNumber))
               .fill(2)
               .map((item, index) => {
-                console.log(index, currentPlayer);
                 return (
                   <div
                     className="playPageDisplayScores"
