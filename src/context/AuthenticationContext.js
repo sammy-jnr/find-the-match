@@ -179,7 +179,7 @@ export function AuthProvider({children}) {
     function gameEnded(timeleft, score) {
         userScore = score;
         timeSpent = timeleft
-        if (score <= 10){
+        if (score < 50){
             setgameWon(false)
         }else{
             setgameWon(true)

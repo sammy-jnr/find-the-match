@@ -36,6 +36,8 @@ function Navigation() {
   }, [receiveUserAvatar]);
 
   return (
+    <>
+    <div className="navigationContainerInner" style={{ right: menuOpen ? "0" : "-100%" }}></div>
     <div id="navigationContainer" style={{ right: menuOpen ? "0" : "-100%" }}>
       {isLoggedIn && (
         <div id="navProfileDetails">
@@ -130,7 +132,7 @@ function Navigation() {
               <div className="navThumbnailDiv">
                 <img src={profileIcon} alt="" className="bigIcons" />{" "}
               </div>{" "}
-              <p>My Profile</p>{" "}
+              <p>Profile</p>{" "}
             </div>
           </Link>
         )}
@@ -158,6 +160,7 @@ function Navigation() {
         </div>
       )}
     </div>
+    </>
   );
 }
 

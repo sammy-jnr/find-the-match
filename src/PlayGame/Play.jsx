@@ -1522,7 +1522,7 @@ function Play() {
           className="hoverable"
           onClick={() => {
             let score = calculateScore();
-            gameEnded(secondTimeLeft, score);
+            currectGameInfo.numberOfPlayers === 1 && gameEnded(secondTimeLeft, score);
             clearInterval(myinterval);
             navigate("/result");
           }}
