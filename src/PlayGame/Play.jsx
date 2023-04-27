@@ -100,6 +100,8 @@ function Play() {
       "L",
       "M",
       "M",
+      "N",
+      "N",
       "O",
       "O",
       "P",
@@ -621,6 +623,8 @@ function Play() {
         setisOpenBox15(true);
       } else if (selectedBox === "4By4Box16") {
         setisOpenBox16(true);
+      } else if (selectedBox === "4By4Box17") {
+        setisOpenBox17(true);
       } else if (selectedBox === "4By4Box18") {
         setisOpenBox18(true);
       } else if (selectedBox === "4By4Box19") {

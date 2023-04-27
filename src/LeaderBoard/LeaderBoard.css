@@ -16,8 +16,8 @@
 
 .leaderboardArrowBack {
     position: absolute;
-    top: 30px;
-    left: 30px;
+    top: 15px;
+    left: 15px;
     width: 30px;
 }
 
@@ -29,24 +29,37 @@
 }
 
 .leaderboardContainers {
-    padding: 10px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
+    padding-top: 60px;
 }
 
 #leaderboardMenuIcon {
-    margin-left: auto;
-    margin-right: 30px;
-    margin-top: 30px;
+    top: 30px;
+    right: 30px;
+    z-index: 2;
+    position: fixed;
 }
 
 #leaderboardMenu {
     display: flex;
 }
+.leaderboardText{
+    position: fixed;
+    top: 0px;
+    padding-top: 27px;
+    text-align: center;
+    width: 100vw;
+    font-size: 22px;
+    font-weight: 600;
+    height: 60px;
+    background-color: #042c2e;
+}
 
 .leaderboardContainersTitle {
-    text-align: center;
-    margin: 40px 30px;
+    margin: 0px 10px;
+    margin-top: 50px;
     font-size: 22px;
     font-weight: 500;
 }
@@ -91,4 +104,12 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
+}
+.top10ItemsEmail{
+    max-width: fit-content;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.top10ItemsScore{
+    margin-left: 10px;
 }

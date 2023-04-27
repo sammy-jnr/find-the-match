@@ -18,7 +18,7 @@ function LeaderBoard() {
     setmenuOpen(false);
   }, [location]);
 
-  if (LeaderBoardArray4By4.length < 1)
+  if (LeaderBoardArray4By4.length < 2)
     return (
       <div className="leaderboardListLoading">
         {" "}
@@ -42,8 +42,9 @@ function LeaderBoard() {
           onClick={() => setmenuOpen(true)}
         />
       </section>
+      <div className="leaderboardText">Leaderboard</div>
       <div className="leaderboardContainers">
-        <div className="leaderboardContainersTitle">Top 10 Scores (4 * 4) </div>
+        <div className="leaderboardContainersTitle">Top 10 (4*4)</div>
         <div>
           {LeaderBoardArray4By4.map((item, index) => {
             return (
@@ -65,7 +66,7 @@ function LeaderBoard() {
         </div>
       </div>
       <div className="leaderboardContainers">
-        <div className="leaderboardContainersTitle">Top 10 Scores (6 * 6) </div>
+        <div className="leaderboardContainersTitle">Top 10 (6 * 6) </div>
         <div>
           {LeaderBoardArray6By6.map((item, index) => {
             return (
