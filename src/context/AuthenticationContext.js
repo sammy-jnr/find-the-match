@@ -173,21 +173,22 @@ export function AuthProvider({children}) {
     let [TotalGamesWon, setTotalGamesWon] = useState(0)
     let [TotalGamesLost, setTotalGamesLost] = useState(0)
 
-    let [gameWon, setgameWon] = useState()
+    let gameWon
     let [modeIs4by4, setmodeIs4by4] = useState(true)
 
     function gameEnded(timeleft, score) {
         userScore = score;
         timeSpent = timeleft
         if (score < 50){
-            setgameWon(false)
+            gameWon = false
         }else{
-            setgameWon(true)
+            gameWon = true
         }
         onGameEnd()
     }
 
     const onGameEnd = async() => {
+        console.log(gameWon)
         if(!user)return;
         if (auth.currentUser){
             if(modeIs4by4){
@@ -634,7 +635,6 @@ async function updateLeaderBoards(){
                 setIsLoggedIn,
                 gameEnded,
                 setmodeIs4by4,
-                setgameWon,
                 AverageTime4by4, 
                 AverageScore4by4, 
                 HighestScore4by4, 

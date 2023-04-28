@@ -19,7 +19,7 @@ function Play() {
     playerNames,
   } = useContext(GeneralContext);
 
-  const { gameEnded, setmodeIs4by4, setgameWon } = useContext(AuthContext);
+  const { gameEnded, setmodeIs4by4 } = useContext(AuthContext);
 
   const location = useLocation();
   useEffect(() => {
